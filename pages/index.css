@@ -6,6 +6,7 @@
 @import url(../blocks/page/__header/page__header.css);
 
 @import url(../blocks/section/_desktop/section_desktop_m.css);
+@import url(../blocks/section/_margin/section_margin_top-m.css);
 
 @import url(../blocks/header/header.css);
 
