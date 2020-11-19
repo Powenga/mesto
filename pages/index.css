@@ -3,12 +3,11 @@
 @import url(../vendor/normalize.css);
 
 @import url(../blocks/page/page.css);
-@import url(../blocks/page/__header/page__header.css);
 @import url(../blocks/page/__component/page__component.css);
 @import url(../blocks/page/__component/_margin/page__component_margin_top-s.css);
+@import url(../blocks/page/__component/_margin/page__component_margin_top-l.css);
 
-@import url(../blocks/section/_desktop/section_desktop_m.css);
-@import url(../blocks/section/_margin/section_margin_top-m.css);
+@import url(../blocks/section/_margin/section_margin_top.css);
 
 @import url(../blocks/header/header.css);
 
