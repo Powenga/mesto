@@ -4,3 +4,11 @@
   line-height: calc(48 / 42);
   font-weight: 500;
 }
+
+@media screen and (max-width: 768px) {
+  .profile__name {
+    font-size: calc(3.35vw + 16.29px);
+    line-height: 1.15;
+  }
+}
+

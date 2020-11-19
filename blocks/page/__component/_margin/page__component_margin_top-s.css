@@ -1,3 +1,9 @@
 .page__component_margin_top-s {
-  margin-top: 6px;
+  margin-top: 4px;
+}
+
+@media screen and (max-width:1024px) {
+  .page__component_margin_top-s {
+    margin-top: calc(-0.85vw + 12.73px);
+  }
 }

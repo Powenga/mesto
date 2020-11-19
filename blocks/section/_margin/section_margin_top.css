@@ -1,3 +1,9 @@
 .section_margin_top {
   margin-top: 50px;
 }
+
+@media screen and (max-width: 1024px) {
+  .section_margin_top {
+    margin-top: calc(1.99vw + 29.64px);
+  }
+}

@@ -4,3 +4,9 @@
   line-height: 1.15;
   color: #545454;
 }
+
+@media screen and (max-width:768px) {
+  .copyright {
+    font-size: calc(0.89vw + 11.14px);
+  }
+}

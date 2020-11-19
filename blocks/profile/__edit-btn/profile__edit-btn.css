@@ -5,4 +5,13 @@
   background-image: url(../../../img/profole-edit-btn.svg);
   width: 24px;
   height: 24px;
-};
+}
+
+@media screen and (max-width: 768px) {
+  .profile__edit-btn {
+    width: calc(1.34vw + 13.71px);
+    height: calc(1.34vw + 13.71px);
+    top:  calc(2vw + 1.57px);
+    left: calc(315 / 293 * 100%);
+  }
+}

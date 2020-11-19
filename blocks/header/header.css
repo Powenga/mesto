@@ -3,6 +3,13 @@
   justify-content: flex-start;
   align-items: center;
   border-bottom: 1px solid #545454;
-  max-width: 880px;
   min-height: calc(74px + 45px);
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1024px) {
+  .header {
+    min-height: calc(4.97vw + 68.09px);
+    padding: 0 calc(7.53vw - 5.09px);
+  }
 }

@@ -4,3 +4,9 @@
   line-height: 1.15;
   font-weight: normal;
 }
+
+@media screen and (max-width: 768px) {
+  .profile__status {
+    font-size: calc(0.89vw + 11.14px);
+  }
+}
