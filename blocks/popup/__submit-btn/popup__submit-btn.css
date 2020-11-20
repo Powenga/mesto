@@ -1,0 +1,10 @@
+.popup__submit-btn {
+  width: 100%;
+  min-height: 50px;
+}
+
+@media screen and (max-width: 768px) {
+  .popup__submit-btn {
+    min-height: calc(0.89vw + 43.14px);
+  }
+}
