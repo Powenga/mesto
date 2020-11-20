@@ -1,17 +1,17 @@
 .profile__edit-btn {
   position: absolute;
   top: 17px;
-  left: 315px;
+  right: -42px;
   background-image: url(../../../img/profole-edit-btn.svg);
   width: 24px;
   height: 24px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .profile__edit-btn {
-    width: calc(1.34vw + 13.71px);
-    height: calc(1.34vw + 13.71px);
-    top:  calc(2vw + 1.57px);
-    left: calc(315 / 293 * 100%);
+    width: calc(.85vw + 15.27px);
+    height: calc(.85vw + 15.27px);
+    top:  calc(1.14vw + 5.36px);
+    right: calc(-3.13vw - 10px);
   }
 }
