@@ -8,7 +8,6 @@ profileInfo.push(profileNameNode);
 profileInfo.push(profileStatusNode);
 
 export function changeInputText() {
-  console.log(profileInfo);
   popupInputNodes.forEach((elem, i = 0) => {
     elem.value = profileInfo[i].textContent;
     i++;
