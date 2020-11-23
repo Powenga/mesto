@@ -12,6 +12,7 @@
   .profile__name {
     font-size: calc(3.35vw + 16.29px);
     line-height: 1.15;
+    margin-bottom: calc(0.89vw + 9.14px);
   }
 }
 
