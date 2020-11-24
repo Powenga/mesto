@@ -1,11 +1,7 @@
 .card__like-btn {
-  background-image: url(../../../images/card-like-btn.svg);
   width: 21px;
   height: 18px;
-  transition: transform 0.4s ease-in;
   position: relative;
 }
 
-.card__like-btn:hover {
-  transform: scale(1.3);
-}
+
