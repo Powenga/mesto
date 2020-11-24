@@ -1,5 +1,5 @@
 .card__like-btn {
-  background-image: url(../../../img/card-like-btn.svg);
+  background-image: url(../../../images/card-like-btn.svg);
   width: 21px;
   height: 18px;
   transition: transform 0.4s ease-in;
