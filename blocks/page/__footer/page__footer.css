@@ -1,9 +1,9 @@
-.page__component_margin_top-s {
+.page__footer {
   margin-top: 4px;
 }
 
 @media screen and (max-width:1024px) {
-  .page__component_margin_top-s {
+  .page__footer {
     margin-top: calc(-0.85vw + 12.73px);
   }
 }

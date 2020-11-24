@@ -4,9 +4,8 @@
 
 @import url(../blocks/page/page.css);
 @import url(../blocks/page/__component/page__component.css);
-@import url(../blocks/page/__component/_margin/page__component_margin_top-s.css);
-@import url(../blocks/page/__component/_margin/page__component_margin_top-l.css);
-@import url(../blocks/page/__component/_laptop/page__component_laptop_big.css);
+@import url(../blocks/page/__content/page__content.css);
+@import url(../blocks/page/__footer/page__footer.css);
 @import url(../blocks/page/__component/_laptop/page__component_laptop_wide.css);
 
 @import url(../blocks/section/_margin/section_margin_top.css);
