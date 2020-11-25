@@ -9,11 +9,11 @@
 @import url(../blocks/page/__component/_laptop/page__component_laptop_wide.css);
 @import url(../blocks/page/__component/_laptop/page__component_laptop_big.css);
 
-@import url(../blocks/section/_margin/section_margin_top.css);
-
 @import url(../blocks/header/header.css);
 
 @import url(../blocks/logo/__image/logo__img.css);
+
+@import url(../blocks/content/content__places.css);
 
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
