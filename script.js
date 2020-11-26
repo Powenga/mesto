@@ -7,18 +7,9 @@ let popupInputStatusNode  = document.querySelector('.popup__input_type_status');
 let popupCloseBtnNode = document.querySelector('.popup__close-btn');
 let popupSubmitBtnNode = document.querySelector('.popup__submit-btn');
 
-popupCloseBtnNode.addEventListener('click', togglePopup);
-popupCloseBtnNode.addEventListener('click', changeInputText);
-
-profileEditBtnNode.addEventListener('click', togglePopup);
-
-popupSubmitBtnNode.addEventListener('click', changeProfileInfo);
-popupSubmitBtnNode.addEventListener('click', togglePopup);
-
 function togglePopup (event) {
   event.preventDefault();
-  popupNode.classList.toggle('visible');
-  changeInputText();
+  popupNode.classList.toggle('popup_visible');
 }
 
 function changeInputText() {
@@ -30,6 +21,13 @@ function changeProfileInfo (event) {
   event.preventDefault();
   profileNameNode.textContent = popupInputNameNode.value;
   profileStatusNode.textContent = popupInputStatusNode.value;
+  togglePopup(event);
 }
 
+popupCloseBtnNode.addEventListener('click', togglePopup);
+
+profileEditBtnNode.addEventListener('click', togglePopup);
+profileEditBtnNode.addEventListener('click', changeInputText);
+
+popupSubmitBtnNode.addEventListener('click', changeProfileInfo);
 
