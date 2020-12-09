@@ -1,4 +1,5 @@
 let popupNode = document.querySelector('.popup');
+
 let profileEditBtnNode = document.querySelector('.profile__edit-btn');
 let profileAddBtnNode = document.querySelector('.profile__add-btn');
 let profileNameNode = document.querySelector('.profile__name');
@@ -100,6 +101,21 @@ function submitPopup (event) {
   closePopup(event);
 }
 
+function likeCard(event) {
+  event.target.classList.toggle('btn_status_liked');
+}
+
+initialCards.forEach(elem => {
+  let card = makeNewCard(elem);
+  placesGridNode.append(card);
+})
+
+let likeBtns = document.querySelectorAll('.btn_type_like');
+
+likeBtns.forEach((elem) => {
+  elem.addEventListener('click', likeCard);
+});
+
 popupCloseBtnNode.addEventListener('click', closePopup);
 
 profileEditBtnNode.addEventListener('click', openPopup);
@@ -107,8 +123,3 @@ profileEditBtnNode.addEventListener('click', openPopup);
 profileAddBtnNode.addEventListener('click', openPopup);
 
 popupSubmitBtnNode.addEventListener('click', submitPopup);
-
-initialCards.forEach(elem => {
-  let card = makeNewCard(elem);
-  placesGridNode.append(card);
-})
