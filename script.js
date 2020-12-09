@@ -1,9 +1,10 @@
-let popupNode = document.querySelector('.popup');
 
 let profileEditBtnNode = document.querySelector('.profile__edit-btn');
 let profileAddBtnNode = document.querySelector('.profile__add-btn');
 let profileNameNode = document.querySelector('.profile__name');
 let profileStatusNode = document.querySelector('.profile__status');
+
+let popupNode = document.querySelector('.popup');
 let popupTitleNode = document.querySelector('.popup__title');
 let popupInputMainNode  = document.querySelector('.popup__input_type_main');
 let popupInputContentNode  = document.querySelector('.popup__input_type_content');
@@ -105,16 +106,26 @@ function likeCard(event) {
   event.target.classList.toggle('btn_status_liked');
 }
 
+function deleteCard(event) {
+  event.target.parentElement.remove();
+}
+
 initialCards.forEach(elem => {
   let card = makeNewCard(elem);
   placesGridNode.append(card);
 })
 
-let likeBtns = document.querySelectorAll('.btn_type_like');
+let likeBtnsNodes = document.querySelectorAll('.btn_type_like');
+let trashBtnNodes = document.querySelectorAll('.btn_type_trash');
 
-likeBtns.forEach((elem) => {
+likeBtnsNodes.forEach(elem => {
   elem.addEventListener('click', likeCard);
 });
+
+trashBtnNodes.forEach(elem => {
+  elem.addEventListener('click', deleteCard);
+})
+
 
 popupCloseBtnNode.addEventListener('click', closePopup);
 
