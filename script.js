@@ -84,6 +84,19 @@ function makeNewCard(cardData) {
   return card;
 }
 
+function addButtonsListeners() {
+  let likeBtnsNodes = document.querySelectorAll('.btn_type_like');
+  let trashBtnNodes = document.querySelectorAll('.btn_type_trash');
+
+  trashBtnNodes.forEach(elem => {
+    elem.addEventListener('click', deleteCard);
+  })
+
+  likeBtnsNodes.forEach(elem => {
+    elem.addEventListener('click', likeCard);
+  });
+}
+
 function submitPopup (event) {
   event.preventDefault();
   if ([...event.target.classList].includes('popup__add-btn')) {
@@ -95,6 +108,7 @@ function submitPopup (event) {
       };
     let card = makeNewCard(cardData);
     placesGridNode.prepend(card)
+    addButtonsListeners();
   } else {
     profileNameNode.textContent = popupInputMainNode.value;
     profileStatusNode.textContent = popupInputContentNode.value;
@@ -102,30 +116,24 @@ function submitPopup (event) {
   closePopup(event);
 }
 
+
+
 function likeCard(event) {
   event.target.classList.toggle('btn_status_liked');
 }
 
 function deleteCard(event) {
   event.target.parentElement.remove();
+  addButtonsListeners();
 }
+
 
 initialCards.forEach(elem => {
   let card = makeNewCard(elem);
   placesGridNode.append(card);
 })
 
-let likeBtnsNodes = document.querySelectorAll('.btn_type_like');
-let trashBtnNodes = document.querySelectorAll('.btn_type_trash');
-
-likeBtnsNodes.forEach(elem => {
-  elem.addEventListener('click', likeCard);
-});
-
-trashBtnNodes.forEach(elem => {
-  elem.addEventListener('click', deleteCard);
-})
-
+addButtonsListeners()
 
 popupCloseBtnNode.addEventListener('click', closePopup);
 
