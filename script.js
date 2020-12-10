@@ -5,14 +5,17 @@ let profileNameNode = document.querySelector('.profile__name');
 let profileStatusNode = document.querySelector('.profile__status');
 
 let popupNode = document.querySelector('.popup');
-let popupTitleNode = document.querySelector('.popup__title');
-let popupInputMainNode  = document.querySelector('.popup__input_type_main');
-let popupInputContentNode  = document.querySelector('.popup__input_type_content');
-let popupCloseBtnNode = document.querySelector('.popup__close-btn');
-let popupSubmitBtnNode = document.querySelector('.popup__submit-btn');
+let popupTitleNode = popupNode.querySelector('.popup__title');
+let popupInputMainNode  = popupNode.querySelector('.popup__input_type_main');
+let popupInputContentNode  = popupNode.querySelector('.popup__input_type_content');
+let popupCloseBtnNode = popupNode.querySelector('.popup__close-btn');
+let popupSubmitBtnNode = popupNode.querySelector('.popup__submit-btn');
 
-const templateCard = document.querySelector('#template-card').content;
-const placesGridNode = document.querySelector('.places__grid');
+let imagePopupNode = document.querySelector('.page__image-popup');
+let imagePopupCloseButtonNode= imagePopupNode.querySelector('.popup__close-btn');
+
+let templateCard = document.querySelector('#template-card').content;
+let placesGridNode = document.querySelector('.places__grid');
 const initialCards = [
   {
       name: 'Архыз',
@@ -68,7 +71,7 @@ function openPopup (event) {
 }
 
 function closePopup (event) {
-  popupNode.classList.remove('popup_visible');
+  event.target.parentElement.parentElement.classList.remove('popup_visible');
 }
 
 function changeInputText() {
@@ -84,9 +87,19 @@ function makeNewCard(cardData) {
   return card;
 }
 
+function openImagePopup(event) {
+  let imageNode = event.target.previousElementSibling;
+  let cardTitleNode = event.target.nextElementSibling.firstElementChild;
+  imagePopupNode.classList.add('popup_visible');
+  imagePopupNode.querySelector('.popup__image').src = imageNode.src;
+  imagePopupNode.querySelector('.popup__image').alt = cardTitleNode.textContent;
+  imagePopupNode.querySelector('.popup__figcaption').textContent = cardTitleNode.textContent;
+}
+
 function addButtonsListeners() {
   let likeBtnsNodes = document.querySelectorAll('.btn_type_like');
   let trashBtnNodes = document.querySelectorAll('.btn_type_trash');
+  let cardImageHovers = document.querySelectorAll('.card__img-hover');
 
   trashBtnNodes.forEach(elem => {
     elem.addEventListener('click', deleteCard);
@@ -94,6 +107,10 @@ function addButtonsListeners() {
 
   likeBtnsNodes.forEach(elem => {
     elem.addEventListener('click', likeCard);
+  });
+
+  cardImageHovers.forEach(elem => {
+    elem.addEventListener('click', openImagePopup);
   });
 }
 
@@ -116,8 +133,6 @@ function submitPopup (event) {
   closePopup(event);
 }
 
-
-
 function likeCard(event) {
   event.target.classList.toggle('btn_status_liked');
 }
@@ -135,7 +150,9 @@ initialCards.forEach(elem => {
 
 addButtonsListeners()
 
+
 popupCloseBtnNode.addEventListener('click', closePopup);
+imagePopupCloseButtonNode.addEventListener('click', closePopup);
 
 profileEditBtnNode.addEventListener('click', openPopup);
 
