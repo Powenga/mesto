@@ -22,62 +22,8 @@
         </div>
       <button type="button" class="btn btn_type_add profile__add-btn transition"></button>
     </section>
-    <section class="places content__places">
+    <section class="places content__places" aria-label='Места'>
       <ul class="places__grid">
-        <li class="card">
-          <div class="card__inner">
-            <img src="images/kirill-pershin-1.jpg" alt="Горы Домбая" class="card__img">
-            <div class="card__content">
-              <h2 class="card__title">Домбай</h2>
-              <button type="button" class="btn btn_type_like card__like-btn"></button>
-            </div>
-          </div>
-        </li>
-        <li class="card">
-          <div class="card__inner">
-            <img src="images/andrey-svistunov-1.jpg" alt="Паровоз в лесах Карелии" class="card__img">
-            <div class="card__content">
-              <h2 class="card__title">Карелия</h2>
-              <button type="button" class="btn btn_type_like card__like-btn"></button>
-            </div>
-          </div>
-        </li>
-        <li class="card">
-          <div class="card__inner">
-            <img src="images/kirill-pershin-2.jpg" alt="Горы Домбая" class="card__img">
-            <div class="card__content">
-              <h2 class="card__title">Карачаево-Черкесия</h2>
-              <button type="button" class="btn btn_type_like card__like-btn"></button>
-            </div>
-          </div>
-        </li>
-        <li class="card">
-          <div class="card__inner">
-            <img src="images/juvnsky-anton-maksimov-1.jpg" alt="Горы Домбая" class="card__img">
-            <div class="card__content">
-              <h2 class="card__title">Эльбрус</h2>
-              <button type="button" class="btn btn_type_like card__like-btn"></button>
-            </div>
-          </div>
-        </li>
-        <li class="card">
-          <div class="card__inner">
-            <img src="images/sergey-pesterev-1.jpg" alt="Горы Домбая" class="card__img">
-            <div class="card__content">
-              <h2 class="card__title">Байкал</h2>
-              <button type="button" class="btn btn_type_like card__like-btn"></button>
-            </div>
-          </div>
-        </li>
-        <li class="card">
-          <div class="card__inner">
-            <img src="images/vladimir-fedotov-1.jpg" alt="Берег Онежского озера" class="card__img">
-            <div class="card__content">
-              <h2 class="card__title">Онежское озеро</h2>
-              <button type="button" class="btn btn_type_like card__like-btn"></button>
-            </div>
-          </div>
-        </li>
       </ul>
     </section>
   </main>
@@ -86,15 +32,37 @@
   </footer>
   <div class="popup">
     <form name="edit-profile" class="popup__container">
-      <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" name="name" placeholder="Имя" class="popup__input popup__input_type_name">
-      <input type="text" name="status" placeholder="Статус" class="popup__input popup__input_type_status">
+      <h2 class="popup__title">Название</h2>
+      <input type="text" name="main" placeholder="Имя" class="popup__input popup__input_type_main">
+      <input name="content" placeholder="Статус" class="popup__input popup__input_type_content">
       <button type="submit" class="btn btn_type_submit popup__submit-btn transition">
         Сохранить
       </button>
       <button type="button" class="btn btn_type_close popup__close-btn transition"></button>
     </form>
   </div>
+  <div class="popup page__image-popup">
+    <div class="popup__container popup__container_type_image">
+      <figure class="popup__figure">
+        <img src="#" alt="" class="popup__image">
+        <figcaption class="popup__figcaption"></figcaption>
+       </figure>
+       <button type="button" class="btn btn_type_close popup__close-btn transition"></button>
+    </div>
+  </div>
+  <template id="template-card">
+    <li class="card">
+      <button class="btn btn_type_trash card__trash-btn transition"></button>
+      <div class="card__inner">
+        <img src="" alt="" class="card__img">
+        <div class="card__img-hover"></div>
+        <div class="card__content">
+          <h2 class="card__title"></h2>
+          <button type="button" class="btn btn_type_like card__like-btn transition"></button>
+        </div>
+      </div>
+    </li>
+  </template>
   <script src="script.js"></script>
 </body>
 </html>
