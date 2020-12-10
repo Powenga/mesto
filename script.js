@@ -1,21 +1,21 @@
 
-let profileEditBtnNode = document.querySelector('.profile__edit-btn');
-let profileAddBtnNode = document.querySelector('.profile__add-btn');
-let profileNameNode = document.querySelector('.profile__name');
-let profileStatusNode = document.querySelector('.profile__status');
+const profileEditBtnNode = document.querySelector('.profile__edit-btn');
+const profileAddBtnNode = document.querySelector('.profile__add-btn');
+const profileNameNode = document.querySelector('.profile__name');
+const profileStatusNode = document.querySelector('.profile__status');
 
-let popupNode = document.querySelector('.popup');
-let popupTitleNode = popupNode.querySelector('.popup__title');
-let popupInputMainNode  = popupNode.querySelector('.popup__input_type_main');
-let popupInputContentNode  = popupNode.querySelector('.popup__input_type_content');
-let popupCloseBtnNode = popupNode.querySelector('.popup__close-btn');
-let popupSubmitBtnNode = popupNode.querySelector('.popup__submit-btn');
+const popupNode = document.querySelector('.popup');
+const popupTitleNode = popupNode.querySelector('.popup__title');
+const popupInputMainNode  = popupNode.querySelector('.popup__input_type_main');
+const popupInputContentNode  = popupNode.querySelector('.popup__input_type_content');
+const popupCloseBtnNode = popupNode.querySelector('.popup__close-btn');
+const popupSubmitBtnNode = popupNode.querySelector('.popup__submit-btn');
 
-let imagePopupNode = document.querySelector('.page__image-popup');
-let imagePopupCloseButtonNode= imagePopupNode.querySelector('.popup__close-btn');
+const imagePopupNode = document.querySelector('.page__image-popup');
+const imagePopupCloseButtonNode= imagePopupNode.querySelector('.popup__close-btn');
 
-let templateCard = document.querySelector('#template-card').content;
-let placesGridNode = document.querySelector('.places__grid');
+const templateCard = document.querySelector('#template-card').content;
+const placesGridNode = document.querySelector('.places__grid');
 const initialCards = [
   {
       name: 'Архыз',
@@ -123,7 +123,7 @@ function submitPopup (event) {
         link: popupInputContentNode.value,
         alt: popupInputMainNode.value
       };
-    let card = makeNewCard(cardData);
+    const card = makeNewCard(cardData);
     placesGridNode.prepend(card)
     addButtonsListeners();
   } else {
@@ -149,7 +149,6 @@ initialCards.forEach(elem => {
 })
 
 addButtonsListeners()
-
 
 popupCloseBtnNode.addEventListener('click', closePopup);
 imagePopupCloseButtonNode.addEventListener('click', closePopup);
