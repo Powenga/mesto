@@ -1,9 +1,11 @@
 .page__footer {
-  margin-top: 4px;
+  margin-top: 66px;
+  margin-bottom: 60px;
 }
 
 @media screen and (max-width:1024px) {
   .page__footer {
-    margin-top: calc(-0.85vw + 12.73px);
+    margin-top: 48px;
+    margin-bottom: 36px
   }
 }

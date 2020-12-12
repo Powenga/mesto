@@ -2,12 +2,5 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  min-height: 140px;
-}
-
-@media screen and (max-width:1024px) {
-  .footer {
-    min-height: calc(88px);
-  }
 }
 
