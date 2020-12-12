@@ -93,7 +93,7 @@ function saveProfile() {
   closePopup(popupEditNode);
 }
 
-function addCard() {
+function addCard(form) {
   const cardData =
     {
       name: popupAddInputTitleNode.value,
@@ -102,8 +102,9 @@ function addCard() {
     const card = createNewCard(cardData);
     renderCard(card, placesGridNode, 'prepend');
     closePopup(popupAddNode);
-    popupAddInputTitleNode.value = '';
-    popupAddInputLinkNode.value = '';
+    //form.reset();
+    /*popupAddInputTitleNode.value = '';
+    popupAddInputLinkNode.value = '';*/
 }
 
 initialCards.forEach(elem => {
@@ -144,6 +145,7 @@ popupEditNode.querySelector('.popup__form').addEventListener('submit', (event) =
 
 popupAddNode.querySelector('.popup__form').addEventListener('submit', (event) => {
   event.preventDefault();
-  addCard();
+  const form = event.target;
+  addCard(form);
 });
 
