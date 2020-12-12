@@ -16,38 +16,7 @@ const imagePopupCloseButtonNode= imagePopupNode.querySelector('.popup__close-btn
 
 const templateCard = document.querySelector('#template-card').content;
 const placesGridNode = document.querySelector('.places__grid');
-const initialCards = [
-  {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-      alt: 'Горы Архыза'
-  },
-  {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-      alt: 'Река в Челябинской области'
-  },
-  {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-      alt: 'Многоэтажные дома в Иваново'
-  },
-  {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-      alt: 'Камчатчкие сопки'
-  },
-  {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-      alt: 'Железная дорога в Архангельской области'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-      alt: 'Скалистый берег Байкала'
-  }
-];
+
 
 function openPopup (event) {
   event.preventDefault();
