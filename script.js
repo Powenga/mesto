@@ -102,9 +102,7 @@ function addCard(form) {
     const card = createNewCard(cardData);
     renderCard(card, placesGridNode, 'prepend');
     closePopup(popupAddNode);
-    //form.reset();
-    /*popupAddInputTitleNode.value = '';
-    popupAddInputLinkNode.value = '';*/
+    form.reset();
 }
 
 initialCards.forEach(elem => {
