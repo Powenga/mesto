@@ -4,6 +4,7 @@
   object-fit: cover;
   object-position: center;
   margin-bottom: 26px;
+  cursor: pointer;
 }
 
 

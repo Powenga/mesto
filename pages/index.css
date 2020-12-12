@@ -38,7 +38,6 @@
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__inner/card__inner.css);
 @import url(../blocks/card/__img/card__img.css);
-@import url(../blocks/card/__img-hover/card__img-hover.css);
 @import url(../blocks/card/__trash-btn/card__trash-btn.css);
 @import url(../blocks/card/__content/card__content.css);
 @import url(../blocks/card/__title/card__title.css);
