@@ -47,9 +47,7 @@ function createNewCard(cardData) {
   card.querySelector('.card__title').textContent = cardData.name;
   cardImage.addEventListener('click', (event) => {
     event.preventDefault();
-    const imageSrc = event.target.src;
-    const imageTitle = event.target.closest('.card__inner').querySelector('.card__title').textContent;
-    addImageData(imageSrc, imageTitle);
+    addImageData(cardData.link, cardData.name);
     openPopup(imagePopupNode);
   })
   card.querySelector('.card__trash-btn').addEventListener('click', (event) => {
