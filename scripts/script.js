@@ -76,14 +76,8 @@ function likeCard(card) {
   card.querySelector('.card__like-btn').classList.toggle('btn_status_liked');
 }
 
-function renderCard(card, container, mode = '') {
-  switch(mode) {
-    case 'prepend':
-      container.prepend(card);
-      break;
-    default:
-      container.append(card);
-  }
+function renderCard(card, container) {
+  container.prepend(card);
 }
 
 function saveProfile() {
@@ -99,7 +93,7 @@ function addCard(form) {
       link: popupAddInputLinkNode.value,
     };
     const card = createNewCard(cardData);
-    renderCard(card, placesGridNode, 'prepend');
+    renderCard(card, placesGridNode);
     closePopup(popupAddNode);
     form.reset();
 }
