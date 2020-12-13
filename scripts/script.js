@@ -63,6 +63,7 @@ function createNewCard(cardData) {
 
 function showCardImage(imageSrc, imageTitle) {
   imagePopup.src = imageSrc;
+  imagePopup.alt = imageTitle;
   imagePopupFigcaption.textContent = imageTitle;
   openPopup(imagePopupNode);
 }
