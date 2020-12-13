@@ -20,7 +20,8 @@ const popupAddSubmitBtnNode = popupAddNode.querySelector('.popup__submit-btn');
 //image popup
 const imagePopupNode = document.querySelector('.popup_type_image');
 const imagePopupCloseButtonNode= imagePopupNode.querySelector('.popup__close-btn');
-
+const imagePopup = imagePopupNode.querySelector('.popup__image');
+const imagePopupFigcaption = imagePopupNode.querySelector('.popup__figcaption');
 
 const templateCard = document.querySelector('#template-card').content;
 const placesGridNode = document.querySelector('.places__grid');
@@ -47,8 +48,7 @@ function createNewCard(cardData) {
   card.querySelector('.card__title').textContent = cardData.name;
   cardImage.addEventListener('click', (event) => {
     event.preventDefault();
-    addImageData(cardData.link, cardData.name);
-    openPopup(imagePopupNode);
+    showCardImage(cardData.link, cardData.name);
   })
   card.querySelector('.card__trash-btn').addEventListener('click', (event) => {
     event.preventDefault();
@@ -61,10 +61,10 @@ function createNewCard(cardData) {
   return card;
 }
 
-function addImageData(imageSrc, imageTitle) {
-  const imagePopup = imagePopupNode.querySelector('.popup__image');
+function showCardImage(imageSrc, imageTitle) {
   imagePopup.src = imageSrc;
-  imagePopupNode.querySelector('.popup__figcaption').textContent = imageTitle;
+  imagePopupFigcaption.textContent = imageTitle;
+  openPopup(imagePopupNode);
 }
 
 function deleteCard(card) {
