@@ -10,6 +10,7 @@ const popupEditInputNameNode  = popupEditNode.querySelector('.popup__input_type_
 const popupEditInputStatusNode  = popupEditNode.querySelector('.popup__input_type_status');
 const popupEditCloseBtnNode = popupEditNode.querySelector('.popup__close-btn');
 const popupEditSubmitBtnNode = popupEditNode.querySelector('.popup__submit-btn');
+const popupEditForm = popupEditNode.querySelector('.popup__form');
 //add card popup
 const popupAddNode = document.querySelector('.popup_type_add-card');
 const popupAddTitleNode = popupAddNode.querySelector('.popup__title');
@@ -17,6 +18,7 @@ const popupAddInputTitleNode  = popupAddNode.querySelector('.popup__input_type_t
 const popupAddInputLinkNode  = popupAddNode.querySelector('.popup__input_type_url');
 const popupAddCloseBtnNode = popupAddNode.querySelector('.popup__close-btn');
 const popupAddSubmitBtnNode = popupAddNode.querySelector('.popup__submit-btn');
+const popupAddForm = popupAddNode.querySelector('.popup__form');
 //image popup
 const imagePopupNode = document.querySelector('.popup_type_image');
 const imagePopupCloseButtonNode= imagePopupNode.querySelector('.popup__close-btn');
@@ -80,13 +82,16 @@ function renderCard(card, container) {
   container.prepend(card);
 }
 
-function saveProfile() {
+function saveProfile(event) {
+  event.preventDefault();
   profileNameNode.textContent = popupEditInputNameNode.value;
   profileStatusNode.textContent = popupEditInputStatusNode.value;
   closePopup(popupEditNode);
 }
 
-function addCard(form) {
+function addCard(event) {
+  event.preventDefault();
+  const form = event.target;
   const cardData =
     {
       name: popupAddInputTitleNode.value,
@@ -128,14 +133,11 @@ imagePopupCloseButtonNode.addEventListener('click', (event) => {
   closePopup(imagePopupNode);
 });
 
-popupEditNode.querySelector('.popup__form').addEventListener('submit', (event) => {
-  event.preventDefault();
-  saveProfile();
+popupEditForm.addEventListener('submit', (event) => {
+  saveProfile(event);
 });
 
-popupAddNode.querySelector('.popup__form').addEventListener('submit', (event) => {
-  event.preventDefault();
-  const form = event.target;
-  addCard(form);
+popupAddForm.addEventListener('submit', (event) => {
+  addCard(event);
 });
 
