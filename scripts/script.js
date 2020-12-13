@@ -99,8 +99,7 @@ function addCard(form) {
 }
 
 initialCards.forEach(elem => {
-  let card = createNewCard(elem);
-  renderCard(card, placesGridNode);
+  renderCard(createNewCard(elem), placesGridNode);
 });
 
 profileEditBtnNode.addEventListener('click', (event) => {
