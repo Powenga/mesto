@@ -12,6 +12,24 @@ function toggleButtonState(inputList, buttonElement, object) {
   }
 }
 
+function disableEnterKey(evt){
+  if(evt.key === 'Enter'){
+    evt.preventDefault();
+  }
+}
+
+function toggleEnterKeyState(inputList){
+  if(hasInvalidInput(inputList)) {
+    inputList.forEach((input) => {
+      input.addEventListener('keydown', disableEnterKey);
+    })
+  } else {
+    inputList.forEach((input) => {
+      input.removeEventListener('keydown', disableEnterKey);
+    })
+  }
+}
+
 function showInputError(formElement, inputElement, errorMessage, object) {
     //Находим span конктетного input по id и создаваемому классу ${inputElement.id}-error
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
@@ -52,11 +70,13 @@ function setEventListener(formElement, object) {
   //Сначала находим ее
   const submitButton = formElement.querySelector(object.submitButtonSelector);
   toggleButtonState(inputList, submitButton, object);
+  toggleEnterKeyState(inputList);
   //Для каждого input в цикле вешаем обработчик события 'input' с функцией проверки checkInputValidity()
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement, object);
       toggleButtonState(inputList, submitButton, object);
+      toggleEnterKeyState(inputList);
     })
   })
 }
