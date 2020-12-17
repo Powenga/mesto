@@ -134,25 +134,32 @@ imagePopupCloseButtonNode.addEventListener('click', (event) => {
 });
 
 popupEditNode.addEventListener('click', (event) => {
-  console.log(event.target);
   if(!event.target.closest('.popup__container')){
     closePopup(popupEditNode);
   }
 });
 
 popupAddNode.addEventListener('click', (event) => {
-  console.log(event.target);
   if(!event.target.closest('.popup__container')){
     closePopup(popupAddNode);
   }
 });
 
 imagePopupNode.addEventListener('click', (event) => {
-  console.log(event.target);
   if(!event.target.closest('.popup__container')){
     closePopup(imagePopupNode);
   }
 });
+
+document.addEventListener('keydown', (event) => {
+  if(event.key === 'Escape') {
+    [popupEditNode, popupAddNode, imagePopupNode].forEach((popup) => {
+      if(popup.classList.contains('popup_visible')) {
+        closePopup(popup);
+      }
+    })
+  }
+})
 
 popupEditForm.addEventListener('submit', (event) => {
   saveProfile(event);

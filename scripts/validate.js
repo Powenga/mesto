@@ -1,6 +1,5 @@
 function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
-    console.log(inputElement.validity);
     return !inputElement.validity.valid;
   });
 }
@@ -79,7 +78,6 @@ function enableValidation(object) {
 const profileNode = document.querySelector('.profile');
 
 profileNode.addEventListener('click', (evt) => {
-  console.log(evt.target.classList);
   if(evt.target.classList.contains('btn')) {
     enableValidation({
       formSelector: '.popup__form',
