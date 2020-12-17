@@ -133,6 +133,27 @@ imagePopupCloseButtonNode.addEventListener('click', (event) => {
   closePopup(imagePopupNode);
 });
 
+popupEditNode.addEventListener('click', (event) => {
+  console.log(event.target);
+  if(!event.target.closest('.popup__container')){
+    closePopup(popupEditNode);
+  }
+});
+
+popupAddNode.addEventListener('click', (event) => {
+  console.log(event.target);
+  if(!event.target.closest('.popup__container')){
+    closePopup(popupAddNode);
+  }
+});
+
+imagePopupNode.addEventListener('click', (event) => {
+  console.log(event.target);
+  if(!event.target.closest('.popup__container')){
+    closePopup(imagePopupNode);
+  }
+});
+
 popupEditForm.addEventListener('submit', (event) => {
   saveProfile(event);
 });
