@@ -24,6 +24,8 @@ const imagePopupNode = document.querySelector('.popup_type_image');
 const imagePopupCloseButtonNode= imagePopupNode.querySelector('.popup__close-btn');
 const imagePopup = imagePopupNode.querySelector('.popup__image');
 const imagePopupFigcaption = imagePopupNode.querySelector('.popup__figcaption');
+//all popup
+const popupNodeList = [popupEditNode, popupAddNode, imagePopupNode];
 
 const templateCard = document.querySelector('#template-card').content;
 const placesGridNode = document.querySelector('.places__grid');
@@ -31,10 +33,22 @@ const placesGridNode = document.querySelector('.places__grid');
 
 function openPopup(popupNode) {
   popupNode.classList.add('popup_visible');
+  document.addEventListener('keydown', keyboardHandler);
 }
 
 function closePopup (popupNode) {
   popupNode.classList.remove('popup_visible');
+  document.removeEventListener('keydown', keyboardHandler);
+}
+
+function keyboardHandler(event){
+  if(event.key === 'Escape') {
+    popupNodeList.forEach((popupNode) => {
+      if(popupNode.classList.contains('popup_visible')) {
+        closePopup(popupNode);
+      }
+    })
+  }
 }
 
 function changeInputText() {
@@ -150,16 +164,6 @@ imagePopupNode.addEventListener('click', (event) => {
     closePopup(imagePopupNode);
   }
 });
-
-document.addEventListener('keydown', (event) => {
-  if(event.key === 'Escape') {
-    [popupEditNode, popupAddNode, imagePopupNode].forEach((popup) => {
-      if(popup.classList.contains('popup_visible')) {
-        closePopup(popup);
-      }
-    })
-  }
-})
 
 popupEditForm.addEventListener('submit', (event) => {
   saveProfile(event);
