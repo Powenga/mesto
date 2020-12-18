@@ -57,16 +57,13 @@ function createNewCard(cardData) {
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
   card.querySelector('.card__title').textContent = cardData.name;
-  cardImage.addEventListener('click', (event) => {
-    event.preventDefault();
+  cardImage.addEventListener('click', () => {
     showCardImage(cardData.link, cardData.name);
   })
   card.querySelector('.card__trash-btn').addEventListener('click', (event) => {
-    event.preventDefault();
     deleteCard(event.target.closest('.card'));
   });
   card.querySelector('.card__like-btn').addEventListener('click', (event) => {
-    event.preventDefault();
     likeCard(event.target.closest('.card'));
   })
   return card;
@@ -116,30 +113,25 @@ initialCards.forEach(elem => {
   renderCard(createNewCard(elem), placesGridNode);
 });
 
-profileEditBtnNode.addEventListener('click', (event) => {
-  event.preventDefault();
+profileEditBtnNode.addEventListener('click', () => {
   popupEditInputNameNode.value = profileNameNode.textContent;
   popupEditInputStatusNode.value = profileStatusNode.textContent;
   openPopup(popupEditNode);
 });
 
-profileAddBtnNode.addEventListener('click', (event) => {
-  event.preventDefault();
+profileAddBtnNode.addEventListener('click', () => {
   openPopup(popupAddNode);
 });
 
-popupEditCloseBtnNode.addEventListener('click', (event) => {
-  event.preventDefault();
+popupEditCloseBtnNode.addEventListener('click', () => {
   closePopup(popupEditNode);
 });
 
-popupAddCloseBtnNode.addEventListener('click', (event) => {
-  event.preventDefault();
+popupAddCloseBtnNode.addEventListener('click', () => {
   closePopup(popupAddNode);
 });
 
-imagePopupCloseButtonNode.addEventListener('click', (event) => {
-  event.preventDefault();
+imagePopupCloseButtonNode.addEventListener('click', () => {
   closePopup(imagePopupNode);
 });
 
