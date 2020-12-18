@@ -51,11 +51,6 @@ function keyboardHandler(event){
   }
 }
 
-function changeInputText() {
-  popupEditInputNameNode.value = profileNameNode.textContent;
-  popupEditInputStatusNode.value = profileStatusNode.textContent;
-}
-
 function createNewCard(cardData) {
   const card = templateCard.cloneNode(true);
   const cardImage = card.querySelector('.card__img');
@@ -123,7 +118,8 @@ initialCards.forEach(elem => {
 
 profileEditBtnNode.addEventListener('click', (event) => {
   event.preventDefault();
-  changeInputText();
+  popupEditInputNameNode.value = profileNameNode.textContent;
+  popupEditInputStatusNode.value = profileStatusNode.textContent;
   openPopup(popupEditNode);
 });
 
