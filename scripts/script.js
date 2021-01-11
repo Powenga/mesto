@@ -151,11 +151,7 @@ popupAddNode.addEventListener('click', (event) => {
   }
 });
 
-imagePopupNode.addEventListener('click', (event) => {
-  if(!event.target.closest('.popup__container')){
-    closePopup(imagePopupNode);
-  }
-});
+
 
 popupEditForm.addEventListener('submit', (event) => {
   saveProfile(event);

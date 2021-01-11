@@ -23,45 +23,30 @@ export default class Card {
     popUpImageNode.src = this._image;
     popUpFigcaptionNode.textContent = this._title;
     popUpNode.classList.add('popup_visible');
-<<<<<<< HEAD
-    document.addEventListener('keydown', this._handleKeyboard);
-=======
     document.addEventListener('keydown', this._handleKeyboardPopup);
     popUpNode.addEventListener('click', this._handleOutsideClickPopup);
->>>>>>> refactor/card_class
   }
 
   _handleClosePopup() {
     popUpNode.classList.remove('popup_visible');
-<<<<<<< HEAD
-    document.removeEventListener('keydown', this._handleKeyboard);
-=======
     document.removeEventListener('keydown', this._handleKeyboardPopup);
     popUpNode.removeEventListener('click', this._handleOutsideClickPopup);
->>>>>>> refactor/card_class
     popUpImageNode.src = '';
     popUpFigcaptionNode.textContent = '';
   }
 
-<<<<<<< HEAD
-  _handleKeyboard = (evt) => {
-=======
   _handleKeyboardPopup = (evt) => {
->>>>>>> refactor/card_class
     if(evt.key === 'Escape') {
       this._handleClosePopup();
     }
   }
 
-<<<<<<< HEAD
-=======
   _handleOutsideClickPopup = (evt) => {
     if(!evt.target.closest('.popup__container')){
       this._handleClosePopup();
     }
   }
 
->>>>>>> refactor/card_class
   _deleteCard() {
     this._node.remove();
   }
