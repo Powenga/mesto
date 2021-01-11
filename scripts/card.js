@@ -79,7 +79,7 @@ export default class Card {
     this._setEventListeners(); //Установили обработчики
     this._element.querySelector('.card__title').textContent = this._title; //Название карточки
     this._element.querySelector('.card__img').src = this._image; //Ссылка на изображение
+    this._element.querySelector('.card__img').alt = this._title;
     return this._element; //Элемент для последующей вставки
   }
-
 }
