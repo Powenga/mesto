@@ -48,7 +48,7 @@ export default class Card {
   }
 
   _deleteCard() {
-    this._node.remove();
+    this._element.remove();
   }
 
   _likeCard() {
@@ -56,30 +56,30 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._node.querySelector('.card__img').addEventListener('click', () => {
+    this._element.querySelector('.card__img').addEventListener('click', () => {
       this._handleOpenPopup();
-    })
+    });
     //Тут функция будет выполняться минимум 6 раз, в тренажере так же (написать в поддержку)
     popUpCloseBttnNode.addEventListener('click', () => {
       if(popUpNode.classList.contains('popup_visible')) {
         this._handleClosePopup();
       }
-    })
-    this._node.querySelector('.card__trash-btn').addEventListener('click', () => {
+    });
+    this._element.querySelector('.card__trash-btn').addEventListener('click', () => {
       this._deleteCard();
     });
-    this._likeBttn = this._node.querySelector('.card__like-btn');
+    this._likeBttn = this._element.querySelector('.card__like-btn');
     this._likeBttn.addEventListener('click', () => {
       this._likeCard();
     });
   }
 
   generateCard() {
-    this._node = this._getTemplate(); //Получили элемент из шаблона
+    this._element = this._getTemplate(); //Получили элемент из шаблона
     this._setEventListeners(); //Установили обработчики
-    this._node.querySelector('.card__title').textContent = this._title; //Название карточки
-    this._node.querySelector('.card__img').src = this._image; //Ссылка на изображение
-    return this._node; //Элемент для последующей вставки
+    this._element.querySelector('.card__title').textContent = this._title; //Название карточки
+    this._element.querySelector('.card__img').src = this._image; //Ссылка на изображение
+    return this._element; //Элемент для последующей вставки
   }
 
 }
