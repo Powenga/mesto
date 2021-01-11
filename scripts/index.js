@@ -66,11 +66,19 @@ function renderCard(card, container) {
   container.prepend(cardNode);
 }
 
+function saveProfile(event) {
+  event.preventDefault();
+  profileNameNode.textContent = popupEditInputNameNode.value;
+  profileStatusNode.textContent = popupEditInputStatusNode.value;
+  closePopup(popupEditNode);
+}
+
 initialCards.forEach(elem => {
   const card = new cardClass(elem, '#template-card');
   renderCard(card, placesGridNode);
 });
 
+//add card events
 profileAddBtnNode.addEventListener('click', () => {
   openPopup(popupAddNode);
 });
@@ -89,85 +97,16 @@ popupAddForm.addEventListener('submit', (event) => {
   addCard(event);
 });
 
-
-/*
-
-
-
-
-
-
-function createNewCard(cardData) {
-  const card = templateCard.cloneNode(true);
-  const cardImage = card.querySelector('.card__img');
-  cardImage.src = cardData.link;
-  cardImage.alt = cardData.name;
-  card.querySelector('.card__title').textContent = cardData.name;
-  cardImage.addEventListener('click', () => {
-    showCardImage(cardData.link, cardData.name);
-  })
-  card.querySelector('.card__trash-btn').addEventListener('click', (event) => {
-    deleteCard(event.target.closest('.card'));
-  });
-  card.querySelector('.card__like-btn').addEventListener('click', (event) => {
-    likeCard(event.target.closest('.card'));
-  })
-  return card;
-}
-
-function showCardImage(imageSrc, imageTitle) {
-  imagePopup.src = imageSrc;
-  imagePopup.alt = imageTitle;
-  imagePopupFigcaption.textContent = imageTitle;
-  openPopup(imagePopupNode);
-}
-
-function deleteCard(card) {
-  card.remove();
-}
-
-function likeCard(card) {
-  card.querySelector('.card__like-btn').classList.toggle('btn_status_liked');
-}
-
-
-
-function saveProfile(event) {
-  event.preventDefault();
-  profileNameNode.textContent = popupEditInputNameNode.value;
-  profileStatusNode.textContent = popupEditInputStatusNode.value;
-  closePopup(popupEditNode);
-}
-
-function addCard(event) {
-  event.preventDefault();
-  const form = event.target;
-  const cardData =
-    {
-      name: popupAddInputTitleNode.value,
-      link: popupAddInputLinkNode.value,
-    };
-    const card = createNewCard(cardData);
-    renderCard(card, placesGridNode);
-    closePopup(popupAddNode);
-    form.reset();
-}*/
-
-
-
-/*
+//edit profile events
 profileEditBtnNode.addEventListener('click', () => {
   popupEditInputNameNode.value = profileNameNode.textContent;
   popupEditInputStatusNode.value = profileStatusNode.textContent;
   openPopup(popupEditNode);
 });
 
-
-
 popupEditCloseBtnNode.addEventListener('click', () => {
   closePopup(popupEditNode);
 });
-
 
 popupEditNode.addEventListener('click', (event) => {
   if(!event.target.closest('.popup__container')){
@@ -175,10 +114,8 @@ popupEditNode.addEventListener('click', (event) => {
   }
 });
 
-
 popupEditForm.addEventListener('submit', (event) => {
   saveProfile(event);
 });
 
-*/
 
