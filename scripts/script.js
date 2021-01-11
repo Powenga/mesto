@@ -1,3 +1,5 @@
+import initialCards from './data.js';
+import cardClass from './card.js';
 
 const profileEditBtnNode = document.querySelector('.profile__edit-btn');
 const profileAddBtnNode = document.querySelector('.profile__add-btn');
@@ -30,7 +32,7 @@ const popupNodeList = [popupEditNode, popupAddNode, imagePopupNode];
 const templateCard = document.querySelector('#template-card').content;
 const placesGridNode = document.querySelector('.places__grid');
 
-
+/*
 function openPopup(popupNode) {
   popupNode.classList.add('popup_visible');
   document.addEventListener('keydown', keyboardHandler);
@@ -107,12 +109,14 @@ function addCard(event) {
     renderCard(card, placesGridNode);
     closePopup(popupAddNode);
     form.reset();
-}
+}*/
 
 initialCards.forEach(elem => {
-  renderCard(createNewCard(elem), placesGridNode);
+  const card = new cardClass(elem, '#template-card');
+  const cardNode = card.generateCard();
+  placesGridNode.append(cardNode);
 });
-
+/*
 profileEditBtnNode.addEventListener('click', () => {
   popupEditInputNameNode.value = profileNameNode.textContent;
   popupEditInputStatusNode.value = profileStatusNode.textContent;
@@ -159,5 +163,5 @@ popupEditForm.addEventListener('submit', (event) => {
 
 popupAddForm.addEventListener('submit', (event) => {
   addCard(event);
-});
+});*/
 
