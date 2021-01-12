@@ -66,12 +66,6 @@ export default class FormValidator {
     errorElement.textContent = '';
   }
 
-  _resetValidation() {
-    this._inputs.forEach((input) => {
-      this._hideInputError(input)
-    });
-  }
-
   _setEventListeners() {
     this._formNode.addEventListener('submit', (evt) => {
       evt.preventDefault();
@@ -84,10 +78,14 @@ export default class FormValidator {
     });
   }
 
+  resetValidation() {
+    this._inputs.forEach((input) => {
+      this._hideInputError(input)
+    });
+  }
+
   enableValidation() {
     //Состояние кнопки при включении валидации
     this._toggleButtonState();
-    //Очистка ошибок
-    this._resetValidation();
   }
 }

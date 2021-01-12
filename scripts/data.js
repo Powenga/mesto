@@ -33,3 +33,5 @@ export const formValidationData = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 };
+
+export const resetRequiredFormNames = ['edit-profile', 'add-card'];
