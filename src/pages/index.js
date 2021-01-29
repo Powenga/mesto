@@ -6,6 +6,7 @@ import {resetRequiredFormNames} from '../utils/constants.js'
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
 
 const profileEditBtnNode = document.querySelector('.profile__edit-btn');
 const profileAddBtnNode = document.querySelector('.profile__add-btn');
@@ -38,12 +39,12 @@ function handleCardClick(name, link) {
   popUpImageNode.src = link;
   popUpFigcaptionNode.textContent = name;
 }
-
+/*
 function openPopup(popupNode) {
   popupNode.classList.add('popup_visible');
   document.addEventListener('keydown', keyboardHandler);
 }
-
+/*
 function closePopup(popupNode) {
   popupNode.classList.remove('popup_visible');
   document.removeEventListener('keydown', keyboardHandler);
@@ -54,7 +55,7 @@ function keyboardHandler(event){
     const openedPopup = document.querySelector('.popup_visible')
     closePopup(openedPopup);
   }
-}
+}*/
 
 function addCard(event) {
   event.preventDefault();
@@ -93,6 +94,10 @@ const carsList = new Section({
 
 carsList.renderItems();
 
+const popup = new Popup({
+  popupSelector: '.popup_type_edit-profile'
+});
+
 /*
 initialCards.forEach(elem => {
   const card = createCard(elem);
@@ -111,13 +116,14 @@ const resetRequiredFormValidators = formList.reduce((object, form) => {
   }
 }, {})
 
+/*
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-btn')) {
       closePopup(popup);
     }
   })
-})
+})*/
 
 //add card events
 profileAddBtnNode.addEventListener('click', () => {
@@ -136,7 +142,7 @@ profileEditBtnNode.addEventListener('click', () => {
   popupEditInputStatusNode.value = profileStatusNode.textContent;
   resetRequiredFormValidators['edit-profile'].resetValidation();
   resetRequiredFormValidators['edit-profile'].enableValidation();
-  openPopup(popupEditNode);
+  popup.open()
 });
 
 popupEditForm.addEventListener('submit', (event) => {
