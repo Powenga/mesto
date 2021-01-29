@@ -1,8 +1,10 @@
-import {initialCards} from './data.js';
-import {formValidationData} from './data.js';
-import {resetRequiredFormNames} from './data.js'
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import './index.css';
+
+import {initialCards} from '../utils/constants.js';
+import {formValidationData} from '../utils/constants.js';
+import {resetRequiredFormNames} from '../utils/constants.js'
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
 
 const profileEditBtnNode = document.querySelector('.profile__edit-btn');
 const profileAddBtnNode = document.querySelector('.profile__add-btn');

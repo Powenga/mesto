@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="pages/index.css">
   <title>Mesto</title>
 </head>
 <body class="page">
   <header class="header page__component page__component_laptop_wide">
-    <a href="index.html" target="_self" class="logo transition">
-      <img src="images/logo.svg" class="logo__img" alt="Логотип">
+    <a href="/" target="_self" class="logo transition">
+      <img src="<%=require('./images/logo.svg')%>" class="logo__img" alt="Логотип">
     </a>
   </header>
   <main class="content page__content page__component page__component_laptop_big">
     <section class="profile">
-        <img src="images/profile-avatar.jpg" class="profile__avatar" alt="Аватар пользователя">
+        <img src="<%=require('./images/profile-avatar.jpg')%>" class="profile__avatar" alt="Аватар пользователя">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button aria-label="Редактировать профиль" type="button" class="btn btn_type_edit profile__edit-btn transition"></button>
@@ -89,9 +88,5 @@
       </div>
     </li>
   </template>
-  <script type="module" src="scripts/index.js"></script>
-  <script type="module" src="scripts/data.js"></script>
-  <script type="module" src="scripts/Card.js"></script>
-  <script type="module" src="scripts/FormValidator.js"></script>
 </body>
 </html>
