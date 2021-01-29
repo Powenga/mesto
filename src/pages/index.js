@@ -5,6 +5,7 @@ import {formValidationData} from '../utils/constants.js';
 import {resetRequiredFormNames} from '../utils/constants.js'
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
 
 const profileEditBtnNode = document.querySelector('.profile__edit-btn');
 const profileAddBtnNode = document.querySelector('.profile__add-btn');
@@ -26,7 +27,9 @@ const imagePopup  = document.querySelector('.popup_type_image');
 const popUpImageNode = imagePopup.querySelector('.popup__image');
 const popUpFigcaptionNode = imagePopup.querySelector('.popup__figcaption');
 
-const placesGridNode = document.querySelector('.places__grid');
+//const placesGridNode = document.querySelector('.places__grid');
+
+const cardContainerSelector = '.places__grid'
 
 const formList = [...document.forms];
 
@@ -61,20 +64,14 @@ function addCard(event) {
       name: form.elements.title.value,
       link: form.elements.content.value,
     };
-    const card = createCard(cardData);
-    renderCard(card, placesGridNode);
+    //const card = createCard(cardData);
+    const card = new Card(cardData, '#template-card', handleCardClick);
+    const cardElement = card.generateCard();
+    carsList.addItem(cardElement)
     closePopup(popupAddNode);
     form.reset();
 }
 
-function createCard(cardData) {
-  const card = new Card(cardData, '#template-card', handleCardClick);
-  return card.generateCard();
-}
-
-function renderCard(card, container) {
-  container.prepend(card);
-}
 
 function saveProfile(event) {
   event.preventDefault();
@@ -83,10 +80,24 @@ function saveProfile(event) {
   closePopup(popupEditNode);
 }
 
+const carsList = new Section({
+  data:initialCards,
+  renderer: (cardItem) => {
+      const card = new Card(cardItem, '#template-card', handleCardClick);
+      const cardElement = card.generateCard();
+      carsList.addItem(cardElement);
+    }
+  },
+  cardContainerSelector
+);
+
+carsList.renderItems();
+
+/*
 initialCards.forEach(elem => {
   const card = createCard(elem);
   renderCard(card, placesGridNode);
-});
+});*/
 
 //Создаем валидаторы для всех возможных форм на странице
 //Формы, которые требуют очистки сообщений, собираем в объект
