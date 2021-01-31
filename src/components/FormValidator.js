@@ -80,12 +80,10 @@ export default class FormValidator {
     this._inputs.forEach((input) => {
       this._hideInputError(input)
     });
-      //Состояние кнопки при включении валидации
       this._toggleButtonState();
   }
 
   enableValidation() {
-    //Вешаем обработчики при создании валидатора
     this._setEventListeners();
   }
 }
