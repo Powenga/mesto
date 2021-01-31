@@ -1,14 +1,14 @@
 export default class Card {
-  constructor(data, selector, handleCardClick) {
+  constructor({data, handleCardClick}, templateSelector) {
     this._title = data.name;
     this._image = data.link;
-    this._selector = selector;
+    this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
     const cardNode = document
-      .querySelector(this._selector)
+      .querySelector(this._templateSelector)
       .content
       .querySelector('.card')
       .cloneNode(true);
@@ -25,7 +25,7 @@ export default class Card {
 
   _setEventListeners() {
     this._cardImage.addEventListener('click', () => {
-      this._handleCardClick(this._title, this._image);
+      this._handleCardClick({title:this._title, src:this._image});
     });
 
     this._element.querySelector('.card__trash-btn').addEventListener('click', () => {
