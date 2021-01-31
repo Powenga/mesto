@@ -8,26 +8,38 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
+//buttons
 const profileEditBtnNode = document.querySelector('.profile__edit-btn');
 const profileAddBtnNode = document.querySelector('.profile__add-btn');
-
-const profileNameNode = document.querySelector('.profile__name');
-const profileStatusNode = document.querySelector('.profile__status');
 
 //edit profile popup
 const popupEditNode = document.querySelector('.popup_type_edit-profile');
 const popupEditInputNameNode  = popupEditNode.querySelector('.popup__input_type_name');
 const popupEditInputStatusNode  = popupEditNode.querySelector('.popup__input_type_status');
 
+//Selectors
 const cardContainerSelector = '.places__grid'
+const cardTemplateSelector = '#template-card';
 
+//Document forms
 const formList = [...document.forms];
+
+//funtions
+function handleCardClick(imageData) {
+  popupWithImage.open(imageData);
+}
+
+const userInfo = new UserInfo({
+  userNameSelector: '.profile__name',
+  userInfoSelector: '.profile__status'
+});
 
 const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   handleFormSubmit: (formData) => {
-    const card = new Card({data:formData, handleCardClick: handleCardClick}, '#template-card');
+    const card = new Card({data: formData, handleCardClick: handleCardClick}, cardTemplateSelector);
     const cardElement = card.generateCard();
     carsList.addItem(cardElement);
   }
@@ -36,7 +48,7 @@ const popupAddCard = new PopupWithForm({
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_type_edit-profile',
   handleFormSubmit: (formData) => {
-    console.log('work');
+    userInfo.setUserInfo(formData)
   }
 });
 
@@ -44,14 +56,10 @@ const popupWithImage = new PopupWithImage({
   popupSelector: '.popup_type_image'
 });
 
-function handleCardClick(imageData) {
-  popupWithImage.open(imageData);
-}
-
 const carsList = new Section({
-  data:initialCards,
+  data: initialCards,
   renderer: (cardItem) => {
-      const card = new Card({data:cardItem, handleCardClick: handleCardClick}, '#template-card');
+      const card = new Card({data: cardItem, handleCardClick: handleCardClick}, cardTemplateSelector);
       const cardElement = card.generateCard();
       carsList.addItem(cardElement);
     }
@@ -59,10 +67,11 @@ const carsList = new Section({
   cardContainerSelector
 );
 
+//render init cards
 carsList.renderItems();
 
-//Создаем валидаторы для всех возможных форм на странице
-//Формы, которые требуют очистки сообщений, собираем в объект
+//create all form validators
+//add forms requiring reset to object
 const resetRequiredFormValidators = formList.reduce((object, form) => {
   const validator = new FormValidator(formValidationData, form);
   if(resetRequiredFormNames.includes(form.name)) {
@@ -82,8 +91,9 @@ profileAddBtnNode.addEventListener('click', () => {
 
 //edit profile events
 profileEditBtnNode.addEventListener('click', () => {
-  popupEditInputNameNode.value = profileNameNode.textContent;
-  popupEditInputStatusNode.value = profileStatusNode.textContent;
+  const userInfoData = userInfo.getUserInfo();
+  popupEditInputNameNode.value = userInfoData.userName;
+  popupEditInputStatusNode.value = userInfoData.userInfo;
   resetRequiredFormValidators['edit-profile'].resetValidation();
   resetRequiredFormValidators['edit-profile'].enableValidation();
   popupEditProfile.open();
