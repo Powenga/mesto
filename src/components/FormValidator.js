@@ -9,8 +9,6 @@ export default class FormValidator {
 
     this._inputs = [...this._formNode.querySelectorAll(this._inputSelector)];
     this._submitBttn = this._formNode.querySelector(this._submitButtonSelector);
-    //Вешаем обработчики при создании валидатора
-    this._setEventListeners();
   }
 
   _toggleButtonState() {
@@ -82,10 +80,12 @@ export default class FormValidator {
     this._inputs.forEach((input) => {
       this._hideInputError(input)
     });
+      //Состояние кнопки при включении валидации
+      this._toggleButtonState();
   }
 
   enableValidation() {
-    //Состояние кнопки при включении валидации
-    this._toggleButtonState();
+    //Вешаем обработчики при создании валидатора
+    this._setEventListeners();
   }
 }

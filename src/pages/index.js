@@ -24,7 +24,8 @@ const cardContainerSelector = '.places__grid'
 const cardTemplateSelector = '#template-card';
 
 //Document forms
-const formList = [...document.forms];
+const popupAddform = document.forms['add-card'];
+const popupEditform = document.forms['edit-profile'];
 
 //funtions
 function handleCardClick(imageData) {
@@ -70,22 +71,15 @@ const carsList = new Section({
 //render init cards
 carsList.renderItems();
 
-//create all form validators
-//add forms requiring reset to object
-const resetRequiredFormValidators = formList.reduce((object, form) => {
-  const validator = new FormValidator(formValidationData, form);
-  if(resetRequiredFormNames.includes(form.name)) {
-    object[form.name] = validator;
-    return object;
-  } else {
-    validator.enableValidation();
-  }
-}, {})
+//validators
+const addFormValidator = new FormValidator(formValidationData, popupAddform);
+addFormValidator.enableValidation();
+const editFormValidator = new FormValidator(formValidationData, popupEditform);
+editFormValidator.enableValidation();
 
 //add card events
 profileAddBtnNode.addEventListener('click', () => {
-  resetRequiredFormValidators['add-card'].resetValidation();
-  resetRequiredFormValidators['add-card'].enableValidation();
+  addFormValidator.resetValidation();
   popupAddCard.open();
 });
 
@@ -94,8 +88,7 @@ profileEditBtnNode.addEventListener('click', () => {
   const userInfoData = userInfo.getUserInfo();
   popupEditInputNameNode.value = userInfoData.userName;
   popupEditInputStatusNode.value = userInfoData.userInfo;
-  resetRequiredFormValidators['edit-profile'].resetValidation();
-  resetRequiredFormValidators['edit-profile'].enableValidation();
+  editFormValidator.resetValidation();
   popupEditProfile.open();
 });
 
