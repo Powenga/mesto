@@ -6,32 +6,38 @@ import {resetRequiredFormNames} from '../utils/constants.js'
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
-import Popup from '../components/Popup.js';
-import PopupWithImage from '../components/PopupWithImage';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 
 const profileEditBtnNode = document.querySelector('.profile__edit-btn');
 const profileAddBtnNode = document.querySelector('.profile__add-btn');
+
 const profileNameNode = document.querySelector('.profile__name');
 const profileStatusNode = document.querySelector('.profile__status');
-
-const popups = document.querySelectorAll('.popup')
 
 //edit profile popup
 const popupEditNode = document.querySelector('.popup_type_edit-profile');
 const popupEditInputNameNode  = popupEditNode.querySelector('.popup__input_type_name');
 const popupEditInputStatusNode  = popupEditNode.querySelector('.popup__input_type_status');
-const popupEditForm = popupEditNode.querySelector('.popup__form');
-//add card popup
-const popupAddNode = document.querySelector('.popup_type_add-card');
-const popupAddForm = popupAddNode.querySelector('.popup__form');
 
 const cardContainerSelector = '.places__grid'
 
 const formList = [...document.forms];
 
-/**/
-const popup = new Popup({
-  popupSelector: '.popup_type_edit-profile'
+const popupAddCard = new PopupWithForm({
+  popupSelector: '.popup_type_add-card',
+  handleFormSubmit: (formData) => {
+    const card = new Card({data:formData, handleCardClick: handleCardClick}, '#template-card');
+    const cardElement = card.generateCard();
+    carsList.addItem(cardElement);
+  }
+});
+
+const popupEditProfile = new PopupWithForm({
+  popupSelector: '.popup_type_edit-profile',
+  handleFormSubmit: (formData) => {
+    console.log('work');
+  }
 });
 
 const popupWithImage = new PopupWithImage({
@@ -40,28 +46,6 @@ const popupWithImage = new PopupWithImage({
 
 function handleCardClick(imageData) {
   popupWithImage.open(imageData);
-}
-
-function addCard(event) {
-  event.preventDefault();
-  const form = event.target;
-  const cardData =
-    {
-      name: form.elements.title.value,
-      link: form.elements.content.value,
-    };
-    const card = new Card({data:cardData, handleCardClick: handleCardClick}, '#template-card');
-    const cardElement = card.generateCard();
-    carsList.addItem(cardElement)
-    closePopup(popupAddNode);
-    form.reset();
-}
-
-function saveProfile(event) {
-  event.preventDefault();
-  profileNameNode.textContent = popupEditInputNameNode.value;
-  profileStatusNode.textContent = popupEditInputStatusNode.value;
-  closePopup(popupEditNode);
 }
 
 const carsList = new Section({
@@ -89,16 +73,11 @@ const resetRequiredFormValidators = formList.reduce((object, form) => {
   }
 }, {})
 
-
 //add card events
 profileAddBtnNode.addEventListener('click', () => {
   resetRequiredFormValidators['add-card'].resetValidation();
   resetRequiredFormValidators['add-card'].enableValidation();
-  openPopup(popupAddNode);
-});
-
-popupAddForm.addEventListener('submit', (event) => {
-  addCard(event);
+  popupAddCard.open();
 });
 
 //edit profile events
@@ -107,11 +86,8 @@ profileEditBtnNode.addEventListener('click', () => {
   popupEditInputStatusNode.value = profileStatusNode.textContent;
   resetRequiredFormValidators['edit-profile'].resetValidation();
   resetRequiredFormValidators['edit-profile'].enableValidation();
-  popup.open()
+  popupEditProfile.open();
 });
 
-popupEditForm.addEventListener('submit', (event) => {
-  saveProfile(event);
-});
 
 
