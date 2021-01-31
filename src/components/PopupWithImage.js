@@ -9,7 +9,6 @@ export default class PopupWithImage extends Popup {
   open(imageData){
     this.image.src = imageData.src;
     this.title.textContent = imageData.title;
-    this._popupElement.classList.add('popup_visible');
-    document.addEventListener('keydown', this._handleEscCloseBinded);
+    super.open();
   }
 }
