@@ -22,7 +22,7 @@ export default class Api {
       })
   }
 
-  getInitialCards() {
+  getInitialCards(handler) {
     fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
@@ -33,7 +33,7 @@ export default class Api {
         return Promise.reject(res.status);
       })
         .then(data => {
-          console.log(data);
+          handler(data);
         })
       .catch((err) => {
          console.log(`Что-то пошло не так. Ошибка: ${err}`)

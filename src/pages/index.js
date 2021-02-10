@@ -1,6 +1,6 @@
 import './index.css';
 
-import {initialCards} from '../utils/constants.js';
+//import {initialCards} from '../utils/constants.js';
 import {formValidationData} from '../utils/constants.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -57,14 +57,28 @@ api.getUserInfo((data) => {
   userAvatarNode.src = data.avatar;
 });
 
+api.getInitialCards((initialCards) => {
+  const cardsList = new Section({
+    data: initialCards,
+    renderer: (cardItem) => {
+      const card = new Card({ data: cardItem, handleCardClick: handleCardClick }, cardTemplateSelector);
+      const cardElement = card.generateCard();
+      cardsList.addItem(cardElement);
+    }
+  },
+    cardContainerSelector
+  );
 
+  //render init cards
+  cardsList.renderItems();
+});
 
 const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   handleFormSubmit: (formData) => {
     const card = new Card({data: formData, handleCardClick: handleCardClick}, cardTemplateSelector);
     const cardElement = card.generateCard();
-    carsList.addItem(cardElement);
+    cardsList.addItem(cardElement);
   }
 });
 
@@ -79,19 +93,6 @@ const popupWithImage = new PopupWithImage({
   popupSelector: '.popup_type_image'
 });
 
-const carsList = new Section({
-  data: initialCards,
-  renderer: (cardItem) => {
-      const card = new Card({data: cardItem, handleCardClick: handleCardClick}, cardTemplateSelector);
-      const cardElement = card.generateCard();
-      carsList.addItem(cardElement);
-    }
-  },
-  cardContainerSelector
-);
-
-//render init cards
-carsList.renderItems();
 
 //validators
 const addFormValidator = new FormValidator(formValidationData, popupAddform);
