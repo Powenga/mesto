@@ -20,8 +20,6 @@ const popupEditInputNameNode  = popupEditNode.querySelector('.popup__input_type_
 const popupEditInputStatusNode  = popupEditNode.querySelector('.popup__input_type_status');
 
 //user data
-const userNameNode = document.querySelector('.profile__name');
-const userInfoNode = document.querySelector('.profile__status')
 const userAvatarNode = document.querySelector('.profile__avatar');
 
 //Selectors
@@ -39,7 +37,8 @@ function handleCardClick(imageData) {
 
 const userInfo = new UserInfo({
   userNameSelector: '.profile__name',
-  userInfoSelector: '.profile__status'
+  userInfoSelector: '.profile__status',
+  userAvatarSelector: '.profile__avatar'
 });
 
 const api = new Api({
@@ -52,10 +51,10 @@ const api = new Api({
 
 //user info
 api.getUserInfo((data) => {
-  userNameNode.textContent = data.name;
-  userInfoNode.textContent = data.about;
-  userAvatarNode.src = data.avatar;
+  userInfo.setUserInfo(data);
+  userInfo.setUserAvatar(data);
 });
+
 
 api.getInitialCards((initialCards) => {
   const cardsList = new Section({
@@ -85,7 +84,7 @@ const popupAddCard = new PopupWithForm({
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_type_edit-profile',
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData)
+    api.editProfile(formData, userInfo.setUserInfo);
   }
 });
 
