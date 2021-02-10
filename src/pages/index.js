@@ -2,13 +2,13 @@ import './index.css';
 
 import {initialCards} from '../utils/constants.js';
 import {formValidationData} from '../utils/constants.js';
-import {resetRequiredFormNames} from '../utils/constants.js'
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
 //buttons
 const profileEditBtnNode = document.querySelector('.profile__edit-btn');
@@ -18,6 +18,11 @@ const profileAddBtnNode = document.querySelector('.profile__add-btn');
 const popupEditNode = document.querySelector('.popup_type_edit-profile');
 const popupEditInputNameNode  = popupEditNode.querySelector('.popup__input_type_name');
 const popupEditInputStatusNode  = popupEditNode.querySelector('.popup__input_type_status');
+
+//user data
+const userNameNode = document.querySelector('.profile__name');
+const userInfoNode = document.querySelector('.profile__status')
+const userAvatarNode = document.querySelector('.profile__avatar');
 
 //Selectors
 const cardContainerSelector = '.places__grid'
@@ -36,6 +41,23 @@ const userInfo = new UserInfo({
   userNameSelector: '.profile__name',
   userInfoSelector: '.profile__status'
 });
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-20',
+  headers: {
+    authorization: 'aad15f24-a077-4b33-9695-f949d459f3da',
+    'Content-Type': 'application/json'
+  }
+});
+
+//user info
+api.getUserInfo((data) => {
+  userNameNode.textContent = data.name;
+  userInfoNode.textContent = data.about;
+  userAvatarNode.src = data.avatar;
+});
+
+
 
 const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
