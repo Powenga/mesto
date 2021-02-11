@@ -55,9 +55,8 @@ api.getUserInfo((data) => {
   userInfo.setUserAvatar(data);
 });
 
-
-api.getInitialCards((initialCards) => {
-  const cardsList = new Section({
+const renderCards = (initialCards) => {
+  let cardsList = new Section({
     data: initialCards,
     renderer: (cardItem) => {
       const {name:title, link} = cardItem;
@@ -69,16 +68,21 @@ api.getInitialCards((initialCards) => {
     cardContainerSelector
   );
 
+  cardsList.clearContainer();
+
   //render init cards
   cardsList.renderItems();
-});
+  cardsList = '';
+}
+
+api.getInitialCards(renderCards);
 
 const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   handleFormSubmit: (formData) => {
-    const card = new Card({data: formData, handleCardClick: handleCardClick}, cardTemplateSelector);
-    const cardElement = card.generateCard();
-    cardsList.addItem(cardElement);
+    const {title:name, link} = formData;
+    //***Проверить работоспособность без передачи аргумента */
+    api.addCard({name, link}, (data) => {api.getInitialCards(renderCards)})
   }
 });
 

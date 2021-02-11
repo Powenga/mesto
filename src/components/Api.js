@@ -53,11 +53,31 @@ export default class Api {
         return Promise.reject(res.status);
       })
         .then(data => {
-          handler(data)
+          handler(data);
         })
       .catch(err => {
         console.log(`Что-то пошло не так. Ошибка: ${err}`)
       })
+  }
+
+  addCard(data, handler) {
+    fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+      .then(res => {
+        if(res.ok) {
+          return res;
+        }
+        return Promise.reject(res.status);
+      })
+        .then(data => {
+          handler(data);
+        })
+        .catch(err => {
+          console.log(`Что-то пошло не так. Ошибка: ${err}`)
+        })
   }
 }
 

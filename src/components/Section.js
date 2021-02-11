@@ -12,4 +12,7 @@ export default class Section {
       this._renderer(item);
     });
   }
+  clearContainer(){
+    this._container.innerHTML = '';
+  }
 }
