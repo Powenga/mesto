@@ -19,7 +19,7 @@ export default class Card {
     return cardNode;
   }
 
-  _deleteCard() {
+  deleteCard() {
     this._element.remove();
   }
 
@@ -34,7 +34,7 @@ export default class Card {
 
     this._cardTrashBttn.addEventListener('click', () => {
       //this._deleteCard();
-      this._handleTrashClick({id:this._id});
+      this._handleTrashClick({id:this._id, removedCard:this._element});
     });
     this._likeBttn = this._element.querySelector('.card__like-btn');
     this._likeBttn.addEventListener('click', () => {

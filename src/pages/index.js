@@ -35,8 +35,10 @@ function handleCardClick(imageData) {
   popupWithImage.open(imageData);
 }
 
-function handleTrashClick({id}) {
+
+function handleTrashClick({id, removedCard}) {
   popupRemoveCard.setInputValues({cardId:id});
+  popupRemoveCard.removedCard = removedCard;
   popupRemoveCard.open();
 }
 
@@ -76,6 +78,7 @@ api.getUserInfo()
 
 let cardsList = '';
 
+
 //get cards
 api.getInitialCards()
   .then(cardItemList => {
@@ -103,7 +106,6 @@ const popupAddCard = new PopupWithForm({
     const {title:name, link} = formData;
     api.addCard({ name, link })
       .then(newCard => {
-        console.log(newCard);
         const {name:title, link, likes, _id:id, owner} = newCard;
         const isMy = owner._id === userInfo.userId ? true : false;
         const cardElement = generateCard({title, link, likes, id, isMy});
@@ -118,8 +120,15 @@ const popupAddCard = new PopupWithForm({
 const popupRemoveCard = new PopupWithForm({
   popupSelector: '.popup_type_remove-card',
   handleFormSubmit: (formData) => {
-    const {cardId:cardId} = formData
-    api.removeCard({cardId}, (data) => {api.getInitialCards(renderCards)});
+    const { cardId: cardId } = formData;
+    api.removeCard({cardId})
+      .then(() => {
+        popupRemoveCard.removedCard.remove();
+      })
+      .catch(err => {
+        //тут логика ошибки, если карточка не удалилась с сервера
+        console.log(`Что-то пошло не так. Ошибка: ${err}`)
+      });
   }
 });
 
