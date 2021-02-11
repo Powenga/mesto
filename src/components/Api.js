@@ -17,7 +17,7 @@ export default class Api {
   }
 
   getInitialCards(handler) {
-    fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
       .then(res => {
@@ -26,12 +26,7 @@ export default class Api {
         }
         return Promise.reject(res.status);
       })
-        .then(data => {
-          handler(data);
-        })
-      .catch((err) => {
-         console.log(`Что-то пошло не так. Ошибка: ${err}`)
-      })
+
   }
 
   editProfile(data, handler) {

@@ -40,31 +40,6 @@ function handleTrashClick({id}) {
   popupRemoveCard.open();
 }
 
-const userInfo = new UserInfo({
-  userNameSelector: '.profile__name',
-  userInfoSelector: '.profile__status',
-  userAvatarSelector: '.profile__avatar'
-});
-
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-20',
-  headers: {
-    authorization: 'aad15f24-a077-4b33-9695-f949d459f3da',
-    'Content-Type': 'application/json'
-  }
-});
-
-//user info
-api.getUserInfo()
-  .then(data => {
-    userInfo.setUserInfo(data);
-    userInfo.setUserAvatar(data);
-  })
-  .catch((err) => {
-    console.log(`Что-то пошло не так. Ошибка: ${err}`)
-  })
-
-
 const renderCards = (initialCards) => {
   let cardsList = new Section({
     data: initialCards,
@@ -89,7 +64,39 @@ const renderCards = (initialCards) => {
   cardsList = '';
 }
 
-api.getInitialCards(renderCards);
+const userInfo = new UserInfo({
+  userNameSelector: '.profile__name',
+  userInfoSelector: '.profile__status',
+  userAvatarSelector: '.profile__avatar'
+});
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-20',
+  headers: {
+    authorization: 'aad15f24-a077-4b33-9695-f949d459f3da',
+    'Content-Type': 'application/json'
+  }
+});
+
+
+//get user info
+api.getUserInfo()
+  .then(data => {
+    userInfo.setUserInfo(data);
+    userInfo.setUserAvatar(data);
+  })
+  .catch((err) => {
+    console.log(`Что-то пошло не так. Ошибка: ${err}`)
+  })
+
+//get cards
+api.getInitialCards()
+  .then(data => {
+    renderCards(data);
+  })
+  .catch((err) => {
+    console.log(`Что-то пошло не так. Ошибка: ${err}`)
+  });
 
 const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
