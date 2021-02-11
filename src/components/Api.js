@@ -44,10 +44,7 @@ export default class Api {
     fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        about: data.about
-      })
+      body: JSON.stringify(data)
     })
       .then(res => {
         if(res.ok) {

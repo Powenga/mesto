@@ -60,7 +60,8 @@ api.getInitialCards((initialCards) => {
   const cardsList = new Section({
     data: initialCards,
     renderer: (cardItem) => {
-      const card = new Card({ data: cardItem, handleCardClick: handleCardClick }, cardTemplateSelector);
+      const {name:title, link} = cardItem;
+      const card = new Card({ data: {title, link}, handleCardClick: handleCardClick }, cardTemplateSelector);
       const cardElement = card.generateCard();
       cardsList.addItem(cardElement);
     }
@@ -84,7 +85,8 @@ const popupAddCard = new PopupWithForm({
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_type_edit-profile',
   handleFormSubmit: (formData) => {
-    api.editProfile(formData, userInfo.setUserInfo);
+    const {userName:name, userAbout:about} = formData;
+    api.editProfile({name, about}, userInfo.setUserInfo);
   }
 });
 
