@@ -40,29 +40,14 @@ function handleTrashClick({id}) {
   popupRemoveCard.open();
 }
 
-const renderCards = (initialCards) => {
-  let cardsList = new Section({
-    data: initialCards,
-    renderer: (cardItem) => {
-      const {name:title, link, likes, _id:id, owner} = cardItem;
-      const isMy = owner._id === userInfo.userId ? true : false;
-      const card = new Card({
-        data: {title, link, likes, id, isMy},
-        handleCardClick: handleCardClick,
-        handleTrashClick: handleTrashClick}, cardTemplateSelector);
-      const cardElement = card.generateCard();
-      cardsList.addItem(cardElement);
-    }
-  },
-    cardContainerSelector
-  );
-
-  cardsList.clearContainer();
-
-  //render init cards
-  cardsList.renderItems();
-  cardsList = '';
+function generateCard (cardItem) {
+  const card = new Card({
+    data: cardItem,
+    handleCardClick: handleCardClick,
+    handleTrashClick: handleTrashClick}, cardTemplateSelector);
+    return card.generateCard();
 }
+
 
 const userInfo = new UserInfo({
   userNameSelector: '.profile__name',
@@ -89,10 +74,24 @@ api.getUserInfo()
     console.log(`Что-то пошло не так. Ошибка: ${err}`)
   })
 
+let cardsList = '';
+
 //get cards
 api.getInitialCards()
-  .then(data => {
-    renderCards(data);
+  .then(cardItemList => {
+    cardsList = new Section({
+      data: cardItemList,
+      renderer: (cardItem) => {
+        const {name:title, link, likes, _id:id, owner} = cardItem;
+        const isMy = owner._id === userInfo.userId ? true : false;
+        const cardElement = generateCard({title, link, likes, id, isMy});
+        cardsList.addItem(cardElement);
+      }
+    },
+      cardContainerSelector
+    );
+    //render init cards
+    cardsList.renderItems();
   })
   .catch((err) => {
     console.log(`Что-то пошло не так. Ошибка: ${err}`)
@@ -102,8 +101,17 @@ const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   handleFormSubmit: (formData) => {
     const {title:name, link} = formData;
-    //***Проверить работоспособность без передачи аргумента */
-    api.addCard({name, link}, (data) => {api.getInitialCards(renderCards)})
+    api.addCard({ name, link })
+      .then(newCard => {
+        console.log(newCard);
+        const {name:title, link, likes, _id:id, owner} = newCard;
+        const isMy = owner._id === userInfo.userId ? true : false;
+        const cardElement = generateCard({title, link, likes, id, isMy});
+        cardsList.addItem(cardElement);
+      })
+      .catch(err => {
+        console.log(`Что-то пошло не так. Ошибка: ${err}`)
+      })
   }
 });
 
@@ -118,8 +126,14 @@ const popupRemoveCard = new PopupWithForm({
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_type_edit-profile',
   handleFormSubmit: (formData) => {
-    const {userName:name, userAbout:about} = formData;
-    api.editProfile({name, about}, userInfo.setUserInfo);
+    const { userName: name, userAbout: about } = formData;
+    api.editProfile({ name, about })
+      .then(data => {
+        userInfo.setUserInfo(data);
+      })
+      .catch(err => {
+        console.log(`Что-то пошло не так. Ошибка: ${err}`)
+      });
   }
 });
 
