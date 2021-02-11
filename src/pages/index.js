@@ -26,13 +26,18 @@ const userAvatarNode = document.querySelector('.profile__avatar');
 const cardContainerSelector = '.places__grid'
 const cardTemplateSelector = '#template-card';
 
-//Document forms
+//Document forms for validation
 const popupAddform = document.forms['add-card'];
 const popupEditform = document.forms['edit-profile'];
 
 //funtions
 function handleCardClick(imageData) {
   popupWithImage.open(imageData);
+}
+
+function handleTrashClick(id) {
+  popupRemoveCard.setInputValues({cardId:id});
+  popupRemoveCard.open();
 }
 
 const userInfo = new UserInfo({
@@ -59,8 +64,11 @@ const renderCards = (initialCards) => {
   let cardsList = new Section({
     data: initialCards,
     renderer: (cardItem) => {
-      const {name:title, link, likes} = cardItem;
-      const card = new Card({ data: {title, link, likes}, handleCardClick: handleCardClick }, cardTemplateSelector);
+      const {name:title, link, likes, _id:id} = cardItem;
+      const card = new Card({
+        data: {title, link, likes, id},
+        handleCardClick: handleCardClick,
+        handleTrashClick: handleTrashClick}, cardTemplateSelector);
       const cardElement = card.generateCard();
       cardsList.addItem(cardElement);
     }
@@ -86,6 +94,14 @@ const popupAddCard = new PopupWithForm({
   }
 });
 
+const popupRemoveCard = new PopupWithForm({
+  popupSelector: '.popup_type_remove-card',
+  handleFormSubmit: (formData) => {
+    const {cardId:cardId} = formData
+    api.removeCard(cardId);
+  }
+});
+
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_type_edit-profile',
   handleFormSubmit: (formData) => {
@@ -93,6 +109,8 @@ const popupEditProfile = new PopupWithForm({
     api.editProfile({name, about}, userInfo.setUserInfo);
   }
 });
+
+
 
 const popupWithImage = new PopupWithImage({
   popupSelector: '.popup_type_image'

@@ -79,6 +79,10 @@ export default class Api {
           console.log(`Что-то пошло не так. Ошибка: ${err}`)
         })
   }
+
+  removeCard(data) {
+    alert('Удалена');
+  }
 }
 
 

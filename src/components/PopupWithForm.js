@@ -5,6 +5,7 @@ export default class PopupWithImage extends Popup {
     super({popupSelector});
     this._handleFormSubmit = handleFormSubmit;
   }
+
   _getInputValues(){
     this._inputList = this._form.querySelectorAll('.popup__input');
     this._formValues = {};
@@ -13,15 +14,26 @@ export default class PopupWithImage extends Popup {
     });
     return this._formValues;
   }
+
+  setInputValues(data){
+    this._inputList = this._form.querySelectorAll('.popup__input');
+    this._formValues = data;
+    this._inputList.forEach(input => {
+      input.value = this._formValues[input.name];
+    });
+    return this._formValues;
+  }
+
   close() {
     super.close();
     this._form.reset();
   }
+
   setEventListeners(){
     super.setEventListeners();
     this._form = this._popupElement.querySelector('.popup__form');
     this._form.addEventListener('submit', (evt) => {
-      evt.preventDefault;
+      evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
       this.close();
     })
