@@ -69,6 +69,19 @@ export default class Api {
         return Promise.reject(res.status);
       })
   }
+
+  likeCard(cardId, method) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: method,
+      headers: this._headers,
+    })
+      .then(res => {
+        if(res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res.status);
+      })
+  }
 }
 
 

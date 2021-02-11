@@ -35,18 +35,27 @@ function handleCardClick(imageData) {
   popupWithImage.open(imageData);
 }
 
-
 function handleTrashClick({id, removedCard}) {
   popupRemoveCard.setInputValues({cardId:id});
   popupRemoveCard.removedCard = removedCard;
   popupRemoveCard.open();
 }
 
+function handleLikeClick({like, cardId}) {
+  let method = 'DELETE';
+  if(like) {
+    method = 'PUT';
+  }
+  api.likeCard(cardId, method);
+}
+
 function generateCard (cardItem) {
   const card = new Card({
     data: cardItem,
     handleCardClick: handleCardClick,
-    handleTrashClick: handleTrashClick}, cardTemplateSelector);
+    handleTrashClick: handleTrashClick,
+    handleLikeClick: handleLikeClick
+  }, cardTemplateSelector);
     return card.generateCard();
 }
 
@@ -86,8 +95,8 @@ api.getInitialCards()
       data: cardItemList,
       renderer: (cardItem) => {
         const {name:title, link, likes, _id:id, owner} = cardItem;
-        const isMy = owner._id === userInfo.userId ? true : false;
-        const cardElement = generateCard({title, link, likes, id, isMy});
+        const userId = userInfo.userId;
+        const cardElement = generateCard({title, link, likes, id, owner, userId});
         cardsList.addItem(cardElement);
       }
     },
@@ -107,8 +116,7 @@ const popupAddCard = new PopupWithForm({
     api.addCard({ name, link })
       .then(newCard => {
         const {name:title, link, likes, _id:id, owner} = newCard;
-        const isMy = owner._id === userInfo.userId ? true : false;
-        const cardElement = generateCard({title, link, likes, id, isMy});
+        const cardElement = generateCard({title, link, likes, id, owner});
         cardsList.addItem(cardElement);
       })
       .catch(err => {
