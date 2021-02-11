@@ -80,8 +80,23 @@ export default class Api {
         })
   }
 
-  removeCard(data) {
-    alert('Удалена');
+  removeCard(data, handler) {
+    fetch(`${this._baseUrl}/cards/${data.cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+      .then(res => {
+        if(res.ok) {
+          return res;
+        }
+        return Promise.reject(res.status);
+      })
+        .then(data => {
+          handler(data);
+        })
+        .catch(err => {
+          console.log(`Что-то пошло не так. Ошибка: ${err}`)
+        })
   }
 }
 

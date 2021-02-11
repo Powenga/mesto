@@ -35,7 +35,7 @@ function handleCardClick(imageData) {
   popupWithImage.open(imageData);
 }
 
-function handleTrashClick(id) {
+function handleTrashClick({id}) {
   popupRemoveCard.setInputValues({cardId:id});
   popupRemoveCard.open();
 }
@@ -64,9 +64,10 @@ const renderCards = (initialCards) => {
   let cardsList = new Section({
     data: initialCards,
     renderer: (cardItem) => {
-      const {name:title, link, likes, _id:id} = cardItem;
+      const {name:title, link, likes, _id:id, owner} = cardItem;
+      const isMy = owner._id === userInfo.userId ? true : false;
       const card = new Card({
-        data: {title, link, likes, id},
+        data: {title, link, likes, id, isMy},
         handleCardClick: handleCardClick,
         handleTrashClick: handleTrashClick}, cardTemplateSelector);
       const cardElement = card.generateCard();
@@ -98,7 +99,7 @@ const popupRemoveCard = new PopupWithForm({
   popupSelector: '.popup_type_remove-card',
   handleFormSubmit: (formData) => {
     const {cardId:cardId} = formData
-    api.removeCard(cardId);
+    api.removeCard({cardId}, (data) => {api.getInitialCards(renderCards)});
   }
 });
 
@@ -110,12 +111,9 @@ const popupEditProfile = new PopupWithForm({
   }
 });
 
-
-
 const popupWithImage = new PopupWithImage({
   popupSelector: '.popup_type_image'
 });
-
 
 //validators
 const addFormValidator = new FormValidator(formValidationData, popupAddform);
