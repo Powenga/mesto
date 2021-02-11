@@ -2,6 +2,7 @@ export default class Card {
   constructor({data, handleCardClick}, templateSelector) {
     this._title = data.title;
     this._image = data.link;
+    this._numberOfLikes = data.likes.length;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -44,6 +45,8 @@ export default class Card {
     this._element.querySelector('.card__title').textContent = this._title; //Название карточки
     this._cardImage.src = this._image; //Ссылка на изображение
     this._cardImage.alt = this._title;
+    this._cardLikeCount = this._element.querySelector('.card__like-count');
+    this._cardLikeCount.textContent = this._numberOfLikes;
     return this._element; //Элемент для последующей вставки
   }
 }

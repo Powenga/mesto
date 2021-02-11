@@ -59,8 +59,8 @@ const renderCards = (initialCards) => {
   let cardsList = new Section({
     data: initialCards,
     renderer: (cardItem) => {
-      const {name:title, link} = cardItem;
-      const card = new Card({ data: {title, link}, handleCardClick: handleCardClick }, cardTemplateSelector);
+      const {name:title, link, likes} = cardItem;
+      const card = new Card({ data: {title, link, likes}, handleCardClick: handleCardClick }, cardTemplateSelector);
       const cardElement = card.generateCard();
       cardsList.addItem(cardElement);
     }
