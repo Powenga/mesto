@@ -55,10 +55,15 @@ const api = new Api({
 });
 
 //user info
-api.getUserInfo((data) => {
-  userInfo.setUserInfo(data);
-  userInfo.setUserAvatar(data);
-});
+api.getUserInfo()
+  .then(data => {
+    userInfo.setUserInfo(data);
+    userInfo.setUserAvatar(data);
+  })
+  .catch((err) => {
+    console.log(`Что-то пошло не так. Ошибка: ${err}`)
+  })
+
 
 const renderCards = (initialCards) => {
   let cardsList = new Section({

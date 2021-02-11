@@ -4,8 +4,8 @@ export default class Api {
     this._headers = headers;
   }
 
-  getUserInfo(handler) {
-    fetch(`${this._baseUrl}/users/me`, {
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
       .then(res => {
@@ -13,12 +13,6 @@ export default class Api {
           return res.json();
         }
         return Promise.reject(res.status);
-      })
-        .then(data => {
-          handler(data);
-        })
-      .catch((err) => {
-        console.log(`Что-то пошло не так. Ошибка: ${err}`)
       })
   }
 
