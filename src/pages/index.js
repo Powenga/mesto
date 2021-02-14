@@ -116,7 +116,8 @@ const popupAddCard = new PopupWithForm({
     api.addCard({ name, link })
       .then(newCard => {
         const {name:title, link, likes, _id:id, owner} = newCard;
-        const cardElement = generateCard({title, link, likes, id, owner});
+        const userId = userInfo.userId;
+        const cardElement = generateCard({title, link, likes, id, owner, userId});
         cardsList.addItem(cardElement);
       })
       .catch(err => {
