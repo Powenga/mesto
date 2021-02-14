@@ -4,6 +4,8 @@ export default class PopupWithImage extends Popup {
   constructor({popupSelector, handleFormSubmit}) {
     super({popupSelector});
     this._handleFormSubmit = handleFormSubmit;
+    this._submitButton = this._form.querySelector('.popup__submit-btn');
+    this._submitButtonText = this._submitButton.textContent;
   }
 
   _getInputValues(){
@@ -32,10 +34,21 @@ export default class PopupWithImage extends Popup {
   setEventListeners(){
     super.setEventListeners();
     this._form = this._popupElement.querySelector('.popup__form');
+
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-      this.close();
+      //this.close();
     })
+  }
+
+  startLoadAnimation(placeholder) {
+    this._submitButton.textContent = placeholder;
+    this._submitButton.classList.add('popup__submit-btn_animated');
+  }
+
+  stopLoadAnimation() {
+    this._submitButton.textContent = this._submitButtonText;
+    this._submitButton.classList.remove('popup__submit-btn_animated');
   }
 }

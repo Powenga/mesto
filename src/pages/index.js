@@ -115,6 +115,7 @@ const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   handleFormSubmit: (formData) => {
     const {title:name, link} = formData;
+    popupAddCard.startLoadAnimation('Сохранение');
     api.addCard({ name, link })
       .then(newCard => {
         const {name:title, link, likes, _id:id, owner} = newCard;
@@ -124,6 +125,10 @@ const popupAddCard = new PopupWithForm({
       })
       .catch(err => {
         console.log(`Что-то пошло не так. Ошибка: ${err}`)
+      })
+      .finally(() => {
+        popupAddCard.stopLoadAnimation();
+        popupAddCard.close();
       })
   }
 });
@@ -140,12 +145,14 @@ const popupRemoveCard = new PopupWithForm({
         //тут логика ошибки, если карточка не удалилась с сервера
         console.log(`Что-то пошло не так. Ошибка: ${err}`)
       });
+    popupRemoveCard.close();
   }
 });
 
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_type_edit-profile',
   handleFormSubmit: (formData) => {
+    popupEditProfile.startLoadAnimation('Сохранение');
     const { userName: name, userAbout: about } = formData;
     api.editProfile({ name, about })
       .then(data => {
@@ -153,13 +160,18 @@ const popupEditProfile = new PopupWithForm({
       })
       .catch(err => {
         console.log(`Что-то пошло не так. Ошибка: ${err}`)
-      });
+      })
+      .finally(() => {
+        popupEditProfile.stopLoadAnimation();
+        popupEditProfile.close();
+      })
   }
 });
 
 const popupEditAvatar = new PopupWithForm({
   popupSelector: '.popup_type_edit-avatar',
   handleFormSubmit: (formData) => {
+    popupEditAvatar.startLoadAnimation('Сохранение');
     const { link: avatar} = formData;
     api.editAvatar({ avatar })
       .then(data => {
@@ -167,7 +179,11 @@ const popupEditAvatar = new PopupWithForm({
       })
       .catch(err => {
         console.log(`Что-то пошло не так. Ошибка: ${err}`)
-      });
+      })
+      .finally(() => {
+        popupEditAvatar.stopLoadAnimation();
+        popupEditAvatar.close();
+      })
   }
 });
 
