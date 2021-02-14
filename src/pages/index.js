@@ -14,6 +14,9 @@ import Api from '../components/Api.js';
 const profileEditBtnNode = document.querySelector('.profile__edit-btn');
 const profileAddBtnNode = document.querySelector('.profile__add-btn');
 
+//avatar
+const profileAvatarContainerNode = document.querySelector('.profile__avatar-container');
+
 //edit profile popup
 const popupEditNode = document.querySelector('.popup_type_edit-profile');
 const popupEditInputNameNode  = popupEditNode.querySelector('.popup__input_type_name');
@@ -22,13 +25,14 @@ const popupEditInputStatusNode  = popupEditNode.querySelector('.popup__input_typ
 //user data
 const userAvatarNode = document.querySelector('.profile__avatar');
 
-//Selectors
+//selectors
 const cardContainerSelector = '.places__grid'
 const cardTemplateSelector = '#template-card';
 
 //Document forms for validation
-const popupAddform = document.forms['add-card'];
-const popupEditform = document.forms['edit-profile'];
+const popupAddForm = document.forms['add-card'];
+const popupEditForm = document.forms['edit-profile'];
+const popupAvatarForm = document.forms['edit-avatar'];
 
 //funtions
 function handleCardClick(imageData) {
@@ -74,7 +78,6 @@ const api = new Api({
   }
 });
 
-
 //get user info
 api.getUserInfo()
   .then(data => {
@@ -86,7 +89,6 @@ api.getUserInfo()
   })
 
 let cardsList = '';
-
 
 //get cards
 api.getInitialCards()
@@ -155,15 +157,31 @@ const popupEditProfile = new PopupWithForm({
   }
 });
 
+const popupEditAvatar = new PopupWithForm({
+  popupSelector: '.popup_type_edit-avatar',
+  handleFormSubmit: (formData) => {
+    const { link: avatar} = formData;
+    api.editAvatar({ avatar })
+      .then(data => {
+        userInfo.setUserAvatar(data);
+      })
+      .catch(err => {
+        console.log(`Что-то пошло не так. Ошибка: ${err}`)
+      });
+  }
+});
+
 const popupWithImage = new PopupWithImage({
   popupSelector: '.popup_type_image'
 });
 
 //validators
-const addFormValidator = new FormValidator(formValidationData, popupAddform);
+const addFormValidator = new FormValidator(formValidationData, popupAddForm);
 addFormValidator.enableValidation();
-const editFormValidator = new FormValidator(formValidationData, popupEditform);
+const editFormValidator = new FormValidator(formValidationData, popupEditForm);
 editFormValidator.enableValidation();
+const editAvatarFormValidator = new FormValidator(formValidationData, popupAvatarForm)
+editAvatarFormValidator.enableValidation();
 
 //add card events
 profileAddBtnNode.addEventListener('click', () => {
@@ -180,5 +198,10 @@ profileEditBtnNode.addEventListener('click', () => {
   popupEditProfile.open();
 });
 
+//edit avatar event
+profileAvatarContainerNode.addEventListener('click', () => {
+  editAvatarFormValidator.resetValidation();
+  popupEditAvatar.open();
+})
 
 
