@@ -12,7 +12,6 @@
   opacity: .9;
   visibility: hidden;
   cursor: pointer;
-  transform: translate(-50%, -50%);
 }
 
 .error-notification::after {

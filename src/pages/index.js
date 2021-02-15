@@ -6,6 +6,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithText from '../components/PopupWithText.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import ErrorNotification from '../components/ErrorNotification.js';
@@ -32,7 +33,7 @@ const popupAddForm = document.forms['add-card'];
 const popupEditForm = document.forms['edit-profile'];
 const popupAvatarForm = document.forms['edit-avatar'];
 
-//funtions
+//functions
 function handleCardClick(imageData) {
   popupWithImage.open(imageData);
 }
@@ -61,9 +62,10 @@ function generateCard (cardItem) {
     return card.generateCard();
 }
 
-function handleErrorClick(evt) {
+function handleErrorClick(evt, {title, err}) {
   evt.stopPropagation();
-  alert('click');
+  const text = `Ошибка: ${err}. Пожалуйста, повторите попытку позже`
+  popupError.open({title, text})
 }
 
 function renderErrorNotification(title) {
@@ -176,7 +178,6 @@ const popupRemoveCard = new PopupWithForm({
         popupRemoveCard.removedCard.remove();
       })
       .catch(err => {
-        console.log('не удалось удалить карточку')
         errorRemoveCard.setErrorType(err);
         errorRemoveCard.show();
       });
@@ -187,7 +188,7 @@ const popupRemoveCard = new PopupWithForm({
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_type_edit-profile',
   handleFormSubmit: (formData) => {
-    popupEditProfile.startLoadAnimation('Сохранение');
+    popupEditProfile.startLoadAnimation('Загрузка');
     const { userName: name, userAbout: about } = formData;
     api.editProfile({ name, about })
       .then(data => {
@@ -229,6 +230,10 @@ const popupEditAvatar = new PopupWithForm({
 const popupWithImage = new PopupWithImage({
   popupSelector: '.popup_type_image'
 });
+
+const popupError = new PopupWithText({
+  popupSelector: '.popup_type_error'
+})
 
 //validators
 const addFormValidator = new FormValidator(formValidationData, popupAddForm);

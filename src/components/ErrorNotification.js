@@ -33,7 +33,7 @@ export default class ErrorNotification {
 
   _setEventListener() {
     this._element.addEventListener('click', (evt) => {
-      this._handleClick(evt, {title: this._title, text: this._errorType})
+      this._handleClick(evt, {title: this._title, err: this._errorType})
     })
   }
 
