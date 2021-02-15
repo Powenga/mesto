@@ -44,9 +44,7 @@ export default class Card {
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick({title:this._title, src:this._image});
     });
-
     this._cardTrashBttn.addEventListener('click', () => {
-      //this._deleteCard();
       this._handleTrashClick({id:this._id, removedCard:this._element});
     });
     this._likeBttn.addEventListener('click', () => {
@@ -55,28 +53,34 @@ export default class Card {
   }
 
   _setLikeCount() {
+    this._cardLikeCount = this._element.querySelector('.card__like-count');
     this._cardLikeCount.textContent = this._numberOfLikes;
   }
 
-  generateCard() {
-    this._element = this._getTemplate(); //Получили элемент из шаблона
-    this._cardImage = this._element.querySelector('.card__img');
+  _removeTrashBttn() {
     this._cardTrashBttn = this._element.querySelector('.card__trash-btn');
-    //Отдельная функция
     if(this._ownerId !== this._userId) {
       this._cardTrashBttn.remove();
     }
-    //Установить статус лайка
+  }
+
+  _setLikeStatus() {
     this._likeBttn = this._element.querySelector('.card__like-btn');
-    if(this._likedUserIdList.includes(this._userId)) {
+    if (this._likedUserIdList.includes(this._userId)) {
       this._likeBttn.classList.add('btn_status_liked');
     }
-    this._element.querySelector('.card__title').textContent = this._title; //Название карточки
-    this._cardImage.src = this._image; //Ссылка на изображение
-    this._cardImage.alt = this._title;
-    this._cardLikeCount = this._element.querySelector('.card__like-count');
     this._setLikeCount();
-    this._setEventListeners(); //Установили обработчики
-    return this._element; //Элемент для последующей вставки
+  }
+
+  generateCard() {
+    this._element = this._getTemplate();
+    this._cardImage = this._element.querySelector('.card__img');
+    this._removeTrashBttn();
+    this._setLikeStatus();
+    this._element.querySelector('.card__title').textContent = this._title;
+    this._cardImage.src = this._image;
+    this._cardImage.alt = this._title;
+    this._setEventListeners();
+    return this._element;
   }
 }
