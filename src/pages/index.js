@@ -1,6 +1,5 @@
 import './index.css';
 
-//import {initialCards} from '../utils/constants.js';
 import {formValidationData} from '../utils/constants.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -29,7 +28,7 @@ const userAvatarNode = document.querySelector('.profile__avatar');
 const cardContainerSelector = '.places__grid'
 const cardTemplateSelector = '#template-card';
 
-//Document forms for validation
+//document forms for validation
 const popupAddForm = document.forms['add-card'];
 const popupEditForm = document.forms['edit-profile'];
 const popupAvatarForm = document.forms['edit-avatar'];
@@ -63,7 +62,7 @@ function generateCard (cardItem) {
     return card.generateCard();
 }
 
-
+//Classes instances
 const userInfo = new UserInfo({
   userNameSelector: '.profile__name',
   userInfoSelector: '.profile__status',
@@ -78,7 +77,7 @@ const api = new Api({
   }
 });
 
-//get user info
+//initial user and card data
 api.getUserInfo()
   .then(data => {
     userInfo.setUserInfo(data);
@@ -90,7 +89,6 @@ api.getUserInfo()
 
 let cardsList = '';
 
-//get cards
 api.getInitialCards()
   .then(cardItemList => {
     cardsList = new Section({
@@ -111,6 +109,7 @@ api.getInitialCards()
     console.log(`Что-то пошло не так. Ошибка: ${err}`)
   });
 
+//popup instances
 const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   handleFormSubmit: (formData) => {
@@ -142,7 +141,6 @@ const popupRemoveCard = new PopupWithForm({
         popupRemoveCard.removedCard.remove();
       })
       .catch(err => {
-        //тут логика ошибки, если карточка не удалилась с сервера
         console.log(`Что-то пошло не так. Ошибка: ${err}`)
       });
     popupRemoveCard.close();

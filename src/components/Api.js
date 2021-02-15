@@ -2,45 +2,35 @@ export default class Api {
   constructor({baseUrl, headers}) {
     this._baseUrl = baseUrl;
     this._headers = headers;
+    this._onError = res => {
+      if(res.ok) {
+        return res.json();
+      }
+      return Promise.reject(res.status);
+    }
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then(res => {
-        if(res.ok){
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
+      .then(this._onError)
   }
 
-  getInitialCards(handler) {
+  getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
-
+      .then(this._onError)
   }
 
-  editProfile(data, handler) {
+  editProfile(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(data)
     })
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
+      .then(this._onError)
   }
 
   addCard(data) {
@@ -49,12 +39,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(data)
     })
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
+      .then(this._onError)
   }
 
   removeCard(data) {
@@ -62,12 +47,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
+      .then(this._onError)
   }
 
   likeCard(cardId, method) {
@@ -75,12 +55,7 @@ export default class Api {
       method: method,
       headers: this._headers,
     })
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
+      .then(this._onError)
   }
 
   editAvatar(data) {
@@ -89,12 +64,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(data)
     })
-      .then(res => {
-        if(res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
+      .then(this._onError)
   }
 }
 
