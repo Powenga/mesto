@@ -8,21 +8,20 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
+import ErrorNotification from '../components/ErrorNotification.js';
 
 //buttons
 const profileEditBtnNode = document.querySelector('.profile__edit-btn');
 const profileAddBtnNode = document.querySelector('.profile__add-btn');
 
-//avatar
+//profile
 const profileAvatarContainerNode = document.querySelector('.profile__avatar-container');
+const profileNode = document.querySelector('.profile');
 
 //edit profile popup
 const popupEditNode = document.querySelector('.popup_type_edit-profile');
 const popupEditInputNameNode  = popupEditNode.querySelector('.popup__input_type_name');
 const popupEditInputStatusNode  = popupEditNode.querySelector('.popup__input_type_status');
-
-//user data
-const userAvatarNode = document.querySelector('.profile__avatar');
 
 //selectors
 const cardContainerSelector = '.places__grid'
@@ -62,6 +61,33 @@ function generateCard (cardItem) {
     return card.generateCard();
 }
 
+function handleErrorClick(evt) {
+  evt.stopPropagation();
+  alert('click');
+}
+
+function renderErrorNotification(title) {
+  return new ErrorNotification({
+    data: {
+      title: title,
+    },
+    handleClick: handleErrorClick
+  }, '#template-error-notification');
+}
+
+const errorUserInfo = renderErrorNotification('Не удалось загрузить данные пользователя');
+errorUserInfo.setContainer(profileNode);
+const errorUserSetInfo = renderErrorNotification('Не удалось сохранить данные пользователя');
+errorUserSetInfo.setContainer(document.querySelector('.profile__info'));
+const errorInitCard = renderErrorNotification('Не удалось загрузить карточки');
+errorInitCard.setContainer(document.querySelector(cardContainerSelector));
+const errorAddCard = renderErrorNotification('Не удалось добавить новое место');
+errorAddCard.setContainer(profileAddBtnNode);
+const errorSetAvatar = renderErrorNotification('Не удалось сохранить аватар');
+errorSetAvatar.setContainer(profileNode);
+const errorRemoveCard = renderErrorNotification('Не удалось удалить карточку');
+
+
 //Classes instances
 const userInfo = new UserInfo({
   userNameSelector: '.profile__name',
@@ -80,17 +106,20 @@ const api = new Api({
 //initial user and card data
 api.getUserInfo()
   .then(data => {
+    errorUserInfo.hide();
     userInfo.setUserInfo(data);
     userInfo.setUserAvatar(data);
   })
   .catch((err) => {
-    console.log(`Что-то пошло не так. Ошибка: ${err}`)
+    errorUserInfo.setErrorType(err);
+    errorUserInfo.show();
   })
 
 let cardsList = '';
 
 api.getInitialCards()
   .then(cardItemList => {
+    errorInitCard.hide();
     cardsList = new Section({
       data: cardItemList,
       renderer: (cardItem) => {
@@ -106,7 +135,8 @@ api.getInitialCards()
     cardsList.renderItems();
   })
   .catch((err) => {
-    console.log(`Что-то пошло не так. Ошибка: ${err}`)
+    errorInitCard.setErrorType(err);
+    errorInitCard.show();
   });
 
 //popup instances
@@ -117,13 +147,16 @@ const popupAddCard = new PopupWithForm({
     popupAddCard.startLoadAnimation('Сохранение');
     api.addCard({ name, link })
       .then(newCard => {
+        errorAddCard.hide();
         const {name:title, link, likes, _id:id, owner} = newCard;
         const userId = userInfo.userId;
         const cardElement = generateCard({title, link, likes, id, owner, userId});
         cardsList.addItem(cardElement);
       })
       .catch(err => {
-        console.log(`Что-то пошло не так. Ошибка: ${err}`)
+        errorAddCard.setErrorType(err);
+        errorAddCard.show();
+
       })
       .finally(() => {
         popupAddCard.stopLoadAnimation();
@@ -136,12 +169,16 @@ const popupRemoveCard = new PopupWithForm({
   popupSelector: '.popup_type_remove-card',
   handleFormSubmit: (formData) => {
     const { cardId: cardId } = formData;
+    errorRemoveCard.setContainer(popupRemoveCard.removedCard);
     api.removeCard({cardId})
       .then(() => {
+        errorRemoveCard.hide();
         popupRemoveCard.removedCard.remove();
       })
       .catch(err => {
-        console.log(`Что-то пошло не так. Ошибка: ${err}`)
+        console.log('не удалось удалить карточку')
+        errorRemoveCard.setErrorType(err);
+        errorRemoveCard.show();
       });
     popupRemoveCard.close();
   }
@@ -154,10 +191,12 @@ const popupEditProfile = new PopupWithForm({
     const { userName: name, userAbout: about } = formData;
     api.editProfile({ name, about })
       .then(data => {
+        errorUserSetInfo.hide();
         userInfo.setUserInfo(data);
       })
       .catch(err => {
-        console.log(`Что-то пошло не так. Ошибка: ${err}`)
+        errorUserSetInfo.setErrorType(err);
+        errorUserSetInfo.show();
       })
       .finally(() => {
         popupEditProfile.stopLoadAnimation();
@@ -173,10 +212,12 @@ const popupEditAvatar = new PopupWithForm({
     const { link: avatar} = formData;
     api.editAvatar({ avatar })
       .then(data => {
+        errorSetAvatar.hide();
         userInfo.setUserAvatar(data);
       })
       .catch(err => {
-        console.log(`Что-то пошло не так. Ошибка: ${err}`)
+        errorSetAvatar.setErrorType(err);
+        errorSetAvatar.show();
       })
       .finally(() => {
         popupEditAvatar.stopLoadAnimation();
@@ -217,5 +258,7 @@ profileAvatarContainerNode.addEventListener('click', () => {
   editAvatarFormValidator.resetValidation();
   popupEditAvatar.open();
 })
+
+
 
 

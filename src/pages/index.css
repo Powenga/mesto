@@ -67,6 +67,9 @@
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__figcaption/popup__figcaption.css);
 
+@import url(../blocks/error-notification/error-notification.css);
+@import url(../blocks/error-notification/_visible/error-notification_visible.css);
+
 @import url(../blocks/transition/transition.css);
 
 
