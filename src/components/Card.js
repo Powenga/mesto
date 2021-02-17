@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({data, handleCardClick, handleTrashClick, handleLikeClick}, templateSelector) {
+  constructor({data, handleCardClick, handleTrashClick, handleLikeClick, handleLikeError, clearLikeError}, templateSelector) {
     this._title = data.title;
     this._image = data.link;
     this._likes = data.likes;
@@ -12,6 +12,9 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleTrashClick = handleTrashClick;
     this._handleLikeClick = handleLikeClick;
+    this._handleLikeError = handleLikeError;
+    this._clearLikeError = clearLikeError;
+
   }
 
   _getTemplate() {
@@ -28,16 +31,29 @@ export default class Card {
   }
 
   _likeCard() {
-    this._likeBttn.classList.toggle('btn_status_liked');
-    let like = false;
-    if(this._likeBttn.classList.contains('btn_status_liked')) {
-      this._numberOfLikes++;
-      like = true;
+    this._likeCardAnimation(true);
+    const like = this._likeBttn.classList.contains('btn_status_liked') ? false : true;
+    this._handleLikeClick({like:like, cardId:this._id})
+      .then(() => {
+        this._clearLikeError();
+        this._likeBttn.classList.toggle('btn_status_liked');
+        like ? this._numberOfLikes++ : this._numberOfLikes-- ;
+        this._setLikeCount();
+      })
+      .catch((err) => {
+        this._handleLikeError({err:err, container:this._element});
+      })
+      .finally(() => {
+        this._likeCardAnimation(false);
+      })
+  }
+
+  _likeCardAnimation(state) {
+    if(state) {
+      this._likeBttn.classList.add('btn_animate_like');
     } else {
-      this._numberOfLikes--;
+      this._likeBttn.classList.remove('btn_animate_like');
     }
-    this._setLikeCount();
-    this._handleLikeClick({like:like, cardId:this._id});
   }
 
   _setEventListeners() {
@@ -53,7 +69,6 @@ export default class Card {
   }
 
   _setLikeCount() {
-    this._cardLikeCount = this._element.querySelector('.card__like-count');
     this._cardLikeCount.textContent = this._numberOfLikes;
   }
 
@@ -76,6 +91,7 @@ export default class Card {
     this._element = this._getTemplate();
     this._cardImage = this._element.querySelector('.card__img');
     this._removeTrashBttn();
+    this._cardLikeCount = this._element.querySelector('.card__like-count');
     this._setLikeStatus();
     this._element.querySelector('.card__title').textContent = this._title;
     this._cardImage.src = this._image;

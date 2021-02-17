@@ -51,7 +51,8 @@ export default class Api {
       .then(this._onError)
   }
 
-  likeCard(cardId, method) {
+  likeCard(cardId, like) {
+    const method = like ? 'PUT' : 'DELETE';
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: method,
       headers: this._headers,

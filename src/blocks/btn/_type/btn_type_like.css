@@ -1,9 +1,5 @@
 .btn_type_like {
   background-size: contain;
   background-image: url(../../../images/card-like-btn.svg);
-  transition: transform 0.4s ease-in;
 }
 
-.btn_type_like:hover {
-  transform: scale(1.3);
-}

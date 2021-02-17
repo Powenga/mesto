@@ -45,11 +45,17 @@ function handleTrashClick({id, removedCard}) {
 }
 
 function handleLikeClick({like, cardId}) {
-  let method = 'DELETE';
-  if(like) {
-    method = 'PUT';
-  }
-  api.likeCard(cardId, method);
+  return api.likeCard(cardId, like);
+}
+
+function handleLikeError({err, container}) {
+  errorLikeCard.setContainer(container);
+  errorLikeCard.setErrorType(err);
+  errorLikeCard.show();
+}
+
+function clearLikeError() {
+  errorLikeCard.hide();
 }
 
 function generateCard (cardItem) {
@@ -57,7 +63,9 @@ function generateCard (cardItem) {
     data: cardItem,
     handleCardClick: handleCardClick,
     handleTrashClick: handleTrashClick,
-    handleLikeClick: handleLikeClick
+    handleLikeClick: handleLikeClick,
+    handleLikeError: handleLikeError,
+    clearLikeError: clearLikeError
   }, cardTemplateSelector);
     return card.generateCard();
 }
@@ -68,11 +76,12 @@ function handleErrorClick(evt, {title, err}) {
   popupError.open({title, text})
 }
 
-function renderErrorNotification(title) {
+function renderErrorNotification(title, position) {
   return new ErrorNotification({
     data: {
       title: title,
     },
+    position: position,
     handleClick: handleErrorClick
   }, '#template-error-notification');
 }
@@ -87,7 +96,8 @@ const errorAddCard = renderErrorNotification('Не удалось добавит
 errorAddCard.setContainer(profileAddBtnNode);
 const errorSetAvatar = renderErrorNotification('Не удалось сохранить аватар');
 errorSetAvatar.setContainer(profileNode);
-const errorRemoveCard = renderErrorNotification('Не удалось удалить карточку');
+const errorRemoveCard = renderErrorNotification('Не удалось удалить карточку', {left: '100%'});
+const errorLikeCard = renderErrorNotification('Ошибка лайка карточки', {top: '100%', left: '100%'});
 
 
 //Classes instances

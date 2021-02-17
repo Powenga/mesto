@@ -1,8 +1,9 @@
 export default class ErrorNotification {
-  constructor({data, handleClick}, templateSelector) {
+  constructor({data, handleClick, position}, templateSelector) {
     this._title = data.title;
     this._handleClick = handleClick;
     this._templateSelector = templateSelector;
+    this._position = position;
     this._generate();
   }
 
@@ -40,7 +41,14 @@ export default class ErrorNotification {
   setContainer(container) {
     this._container = container;
     this._setContainerPosition();
+    this._setNotificationPosition();
     this._render();
+  }
+
+  _setNotificationPosition() {
+    for (let prop in this._position) {
+      this._element.style[prop] = this._position[prop];
+    }
   }
 
   _setContainerPosition() {

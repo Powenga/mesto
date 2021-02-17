@@ -33,6 +33,7 @@
 @import url(../blocks/btn/_type/btn_type_submit.css);
 @import url(../blocks/btn/_type/btn_type_close.css);
 @import url(../blocks/btn/_type/btn_type_trash.css);
+@import url(../blocks/btn/_animate/btn_animate_like.css);
 
 @import url(../blocks/places/__grid/places__grid.css);
 
