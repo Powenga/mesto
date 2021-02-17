@@ -1,7 +1,7 @@
 {
-  "name": "mesto",
+  "name": "en-consult",
   "version": "0.0.1",
-  "description": "Learning project",
+  "description": "",
   "main": "./index.js",
   "scripts": {
     "build": "webpack --mode production",

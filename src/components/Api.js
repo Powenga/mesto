@@ -2,12 +2,13 @@ export default class Api {
   constructor({baseUrl, headers}) {
     this._baseUrl = baseUrl;
     this._headers = headers;
-    this._onError = res => {
-      if(res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
+  }
+
+  _onError(res) {
+    if(res.ok) {
+      return res.json();
     }
+    return Promise.reject(res.status);
   }
 
   getUserInfo() {
