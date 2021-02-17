@@ -1,7 +1,7 @@
 .error-notification {
   position: absolute;
-  /*top: 0;
-  left: 0;*/
+  top: 0;
+  left: 0;
   width: 25px;
   height: 25px;
   clip-path: circle(50%);

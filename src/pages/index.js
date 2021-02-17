@@ -86,17 +86,15 @@ function renderErrorNotification(title, position) {
   }, '#template-error-notification');
 }
 
-const errorUserInfo = renderErrorNotification('Не удалось загрузить данные пользователя');
-errorUserInfo.setContainer(profileNode);
+const errorInitData = renderErrorNotification('Не удалось загрузить данные');
+errorInitData.setContainer(profileNode);
 const errorUserSetInfo = renderErrorNotification('Не удалось сохранить данные пользователя');
 errorUserSetInfo.setContainer(document.querySelector('.profile__info'));
-const errorInitCard = renderErrorNotification('Не удалось загрузить карточки');
-errorInitCard.setContainer(document.querySelector(cardContainerSelector));
 const errorAddCard = renderErrorNotification('Не удалось добавить новое место');
 errorAddCard.setContainer(profileAddBtnNode);
 const errorSetAvatar = renderErrorNotification('Не удалось сохранить аватар');
 errorSetAvatar.setContainer(profileNode);
-const errorRemoveCard = renderErrorNotification('Не удалось удалить карточку', {left: '100%'});
+const errorRemoveCard = renderErrorNotification('Не удалось удалить карточку', {top: 0, left: '100%'});
 const errorLikeCard = renderErrorNotification('Ошибка лайка карточки', {top: '100%', left: '100%'});
 
 
@@ -115,41 +113,35 @@ const api = new Api({
   }
 });
 
+const cardsList = new Section({
+  renderer: (cardItem) => {
+    const {name:title, link, likes, _id:id, owner} = cardItem;
+    const userId = userInfo.userId;
+    const cardElement = generateCard({title, link, likes, id, owner, userId});
+    cardsList.addItem(cardElement);
+  }
+},
+  cardContainerSelector
+);
+
 //initial user and card data
-api.getUserInfo()
-  .then(data => {
-    errorUserInfo.hide();
-    userInfo.setUserInfo(data);
-    userInfo.setUserAvatar(data);
-  })
-  .catch((err) => {
-    errorUserInfo.setErrorType(err);
-    errorUserInfo.show();
-  })
-
-let cardsList = '';
-
-api.getInitialCards()
-  .then(cardItemList => {
-    errorInitCard.hide();
-    cardsList = new Section({
-      data: cardItemList,
-      renderer: (cardItem) => {
-        const {name:title, link, likes, _id:id, owner} = cardItem;
-        const userId = userInfo.userId;
-        const cardElement = generateCard({title, link, likes, id, owner, userId});
-        cardsList.addItem(cardElement);
-      }
-    },
-      cardContainerSelector
-    );
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards()
+])
+  .then((values) => {
+    errorInitData.hide();
+    userInfo.setUserInfo(values[0]);
+    userInfo.setUserAvatar(values[0]);
+    //initcards
+    const initialCardItems = values[1].sort((a, b) => a.createdAt > b.createdAt ? 1: -1);
     //render init cards
-    cardsList.renderItems();
+    cardsList.renderItems(initialCardItems);
   })
   .catch((err) => {
-    errorInitCard.setErrorType(err);
-    errorInitCard.show();
-  });
+    errorInitData.setErrorType(err);
+    errorInitData.show();
+  })
 
 //popup instances
 const popupAddCard = new PopupWithForm({
@@ -164,15 +156,14 @@ const popupAddCard = new PopupWithForm({
         const userId = userInfo.userId;
         const cardElement = generateCard({title, link, likes, id, owner, userId});
         cardsList.addItem(cardElement);
+        popupAddCard.close();
       })
       .catch(err => {
         errorAddCard.setErrorType(err);
         errorAddCard.show();
-
       })
       .finally(() => {
         popupAddCard.stopLoadAnimation();
-        popupAddCard.close();
       })
   }
 });
@@ -181,17 +172,21 @@ const popupRemoveCard = new PopupWithForm({
   popupSelector: '.popup_type_remove-card',
   handleFormSubmit: (formData) => {
     const { cardId: cardId } = formData;
+    popupRemoveCard.startLoadAnimation('Удаление');
     errorRemoveCard.setContainer(popupRemoveCard.removedCard);
     api.removeCard({cardId})
       .then(() => {
         errorRemoveCard.hide();
         popupRemoveCard.removedCard.remove();
+        popupRemoveCard.close();
       })
       .catch(err => {
         errorRemoveCard.setErrorType(err);
         errorRemoveCard.show();
+      })
+      .finally(() => {
+        popupRemoveCard.stopLoadAnimation();
       });
-    popupRemoveCard.close();
   }
 });
 
@@ -204,6 +199,7 @@ const popupEditProfile = new PopupWithForm({
       .then(data => {
         errorUserSetInfo.hide();
         userInfo.setUserInfo(data);
+        popupEditProfile.close();
       })
       .catch(err => {
         errorUserSetInfo.setErrorType(err);
@@ -211,7 +207,6 @@ const popupEditProfile = new PopupWithForm({
       })
       .finally(() => {
         popupEditProfile.stopLoadAnimation();
-        popupEditProfile.close();
       })
   }
 });
@@ -225,6 +220,7 @@ const popupEditAvatar = new PopupWithForm({
       .then(data => {
         errorSetAvatar.hide();
         userInfo.setUserAvatar(data);
+        popupEditAvatar.close();
       })
       .catch(err => {
         errorSetAvatar.setErrorType(err);
@@ -232,7 +228,6 @@ const popupEditAvatar = new PopupWithForm({
       })
       .finally(() => {
         popupEditAvatar.stopLoadAnimation();
-        popupEditAvatar.close();
       })
   }
 });
