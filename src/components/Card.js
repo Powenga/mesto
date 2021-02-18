@@ -34,10 +34,11 @@ export default class Card {
     this._likeCardAnimation(true);
     const like = this._likeBttn.classList.contains('btn_status_liked') ? false : true;
     this._handleLikeClick({like:like, cardId:this._id})
-      .then(() => {
+      .then((data) => {
+        this._numberOfLikes = data.likes.length;
         this._clearLikeError();
         this._likeBttn.classList.toggle('btn_status_liked');
-        like ? this._numberOfLikes++ : this._numberOfLikes-- ;
+        //like ? this._numberOfLikes++ : this._numberOfLikes-- ;
         this._setLikeCount();
       })
       .catch((err) => {
