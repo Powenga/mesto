@@ -35,6 +35,7 @@ export default class Card {
     const like = this._likeBttn.classList.contains('btn_status_liked') ? false : true;
     this._handleLikeClick({like:like, cardId:this._id})
       .then((data) => {
+        console.log(data);
         this._numberOfLikes = data.likes.length;
         this._clearLikeError();
         this._likeBttn.classList.toggle('btn_status_liked');
